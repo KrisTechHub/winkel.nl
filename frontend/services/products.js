@@ -1,7 +1,7 @@
 import axios from "axios";
 const productServer = process.env.PRODUCT_SERVER;
 
-if (!productServer) {
+if (productServer) {
 console.log(productServer);  }
 
 //fetch all products
