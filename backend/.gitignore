@@ -1,0 +1,14 @@
+# backend/.gitignore
+
+# Node modules
+node_modules/
+
+# Build output
+dist/
+
+# Logs
+logs/
+*.log
+
+# Miscellaneous
+coverage/

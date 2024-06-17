@@ -1,0 +1,33 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@font-face {
+    font-family: 'ShadowsIntoLightRegular';
+    src: url('./assets/fonts/ShadowsIntoLight-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'KronaOneRegular';
+    src: url('./assets/fonts/KronaOne-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'PoppinsLight';
+    src: url('./assets/fonts/poppins/Poppins-Light.ttf');
+}
+
+@font-face {
+    font-family: 'FamiljenGroteskMedium';
+    src: url('./assets/fonts/FamiljenGrotesk-Medium.ttf');
+}
+
+@font-face {
+    font-family: 'SacramentoRegular';
+    src: url('./assets/fonts/Sacramento-Regular.ttf');
+}
+
+
+#root {
+    bottom: 0;
+}
