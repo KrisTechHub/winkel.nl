@@ -24,6 +24,5 @@ const sessionConfig = {
     }
 }
 
-console.log(sessionConfig.store);
 
 export default sessionConfig;
