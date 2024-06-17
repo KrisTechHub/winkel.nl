@@ -43,6 +43,6 @@ app.use('/users', userRoutes); //user router
 //     // res.send('Something went wrong!', err)
 // })
 
-app.listen(5000, () => {
-    console.log('Serving on port 5000');
+app.listen(8000, () => {
+    console.log('Serving on port 8000');
 });
