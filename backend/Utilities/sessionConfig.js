@@ -8,11 +8,11 @@ const sessionConfig = {
     name: 'session',
     secret: 'session_cookie_secret',
     store: new MySQLStore({
-        host: "localhost",
-        port: 3306,
-        user: "root",
-        password: "password",
-        database: "cookie_user"
+        host: process.env.MYSQL_ADDON_HOST,
+        port: process.env.MYSQL_ADDON_PORT,
+        user: process.env.MYSQL_ADDON_USER,
+        password: process.env.MYSQL_ADDON_PASSWORD,
+        database: process.env.MYSQL_ADDON_DB
     }),
     resave: false,
     saveUninitialized: true,
@@ -23,5 +23,7 @@ const sessionConfig = {
         secure: false,
     }
 }
+
+console.log(sessionConfig.store);
 
 export default sessionConfig;
