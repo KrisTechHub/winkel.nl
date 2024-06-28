@@ -1,8 +1,10 @@
 import express from 'express';
 const router = express.Router({ mergeParams: true });
 import catchAsync from '../Utilities/catchAsync.js';
-import { userData, viewFavorites, deleteProfile, addFavorite, sellerRegister } from '../controllers/users.js';
+import { userData, deleteProfile, sellerRegister } from '../controllers/users.js';
 import { addToCart, viewCartItems, updateCartItem, deleteCartItem } from '../controllers/cart.js';
+import { viewFavorites, addFavorite, deleteFavoriteItem } from '../controllers/favorites.js';
+
 
 router.route('/profile/:uuid')
     .delete(catchAsync(deleteProfile))
@@ -11,6 +13,7 @@ router.route('/profile/:uuid')
 router.route('/:uuid/favorites')
     .get(catchAsync(viewFavorites))
     .post(catchAsync(addFavorite))
+    .delete(catchAsync(deleteFavoriteItem))
 
 router.route('/:uuid/cart')
     .post(catchAsync(addToCart))

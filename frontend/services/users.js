@@ -1,15 +1,6 @@
 import axios from "axios";
 const userServer = `${import.meta.env.VITE_SERVER}/users`;
 
-export const viewFaves = async(uuid) => {
-    try {
-        const res = await axios.get(`${userServer}/${uuid}/favorites`);
-        return res.data
-    } catch (err) {
-        console.error("Error fetching favorites", err)
-    }
-};
-
 
 //delete a user profile
 export const deleteProfile = async (uuid) => {

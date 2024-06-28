@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ShoppingCartIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid';
-import { viewFaves } from '../../../services/users';
+import { viewFaves, deleteFavoriteItem } from '../../../services/favorites';
 import { ToastContainer } from 'react-toastify';
+import { useSelector } from 'react-redux';
 import AddToCart from './AddToCart';
 
 export default function Favorites () {
+    const user = useSelector(state => state.auth.user);
     const [ favorites, setFavorites ] = useState([]);
-    const [totalPrice, setTotalPrice] = useState([]);
-    const [totalAmount, setTotalAmount] = useState(0);
-    const [isLargeScreen, setIsLargeScreen] = useState(true);
-    const { uuid } = useParams();
+    const [ totalPrice, setTotalPrice ] = useState([]);
+    const [ totalAmount, setTotalAmount ] = useState(0);
+    const [ isLargeScreen, setIsLargeScreen ] = useState(true);
 
     useEffect(() => {
         const handleWindowResize = () => {
@@ -18,7 +19,7 @@ export default function Favorites () {
         };
 
         const getFaves = async() => {
-            const data = await viewFaves(uuid);
+            const data = await viewFaves(user.uuid);
             if (data) {
                 setFavorites(data);
                 setTotalPrice(data.map(item => item.product_price));
@@ -32,7 +33,7 @@ export default function Favorites () {
         return () => {
             window.removeEventListener("resize", handleWindowResize);
         };
-    },[uuid])
+    },[user.uuid])
 
     useEffect(() => {
         const calculateTotalAmount = (prices) => {
@@ -45,6 +46,15 @@ export default function Favorites () {
 
         setTotalAmount(calculateTotalAmount(totalPrice));
     }, [totalPrice]);
+
+    const handleDelete = async (favoriteId) => {
+        try {
+            await deleteFavoriteItem(user.uuid, favoriteId);
+            setFavorites(favorites.filter(item => item.favorite_id !== favoriteId));
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <div className='md:pt-6 lg:pt-12 flex flex-col gap-2 md:gap-3'>
@@ -89,7 +99,7 @@ export default function Favorites () {
                                         <p>{item.product_price.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })} </p>
                                     </div>
                                     <div className="col-span-1 flex flex-col lg:gap-2 items-center">
-                                        <p  className='text-red-500 cursor-pointer -mb-4 lg:mb-0'>Delete</p>
+                                        <p onClick={() => handleDelete(item.favorite_id)} className='text-red-500 cursor-pointer -mb-4 lg:mb-0'>Delete</p>
                                         { isLargeScreen ? (
                                             <AddToCart btnType="word" productId={item.product_uuid}/>
                                         ) : (
@@ -108,7 +118,7 @@ export default function Favorites () {
                         <div className='col-span-3 text-right'>Items Total Price</div>
                         <div className='col-span-2'> {totalAmount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })} </div>
                         <div className='col-span-1 lg:col-span-2'>
-                            <Link to={`/user/${uuid}/cart`}>
+                            <Link to={`/user/${user.uuid}/cart`}>
                                 <p className='bg-black text-white w-full lg:px-2 cursor-pointer py-1 rounded font-bold'>Go to Cart</p>
                             </Link>
                         </div>
