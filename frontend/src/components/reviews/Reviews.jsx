@@ -16,10 +16,10 @@ const labels = [
     "Excellent", "Excellent+"
 ];
 
-export default function Reviews({ reviews, onDelete }) {
+export default function Reviews({ reviews, onDelete, dummyReviews }) {
     const user = useSelector(state => state.auth.user);
+    // const [dummyReviews, setDummyReviews] = useState([])
     const { uuid } = useParams();
-
 
     const deleteReview = async (review_id) => {
         const confirmDelete = window.confirm(
@@ -32,23 +32,40 @@ export default function Reviews({ reviews, onDelete }) {
         }
     };
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Intl.DateTimeFormat('en-US', options).format(date);
+    };
 
+    // useEffect(() => {
+    //     const dummyReviewList = product.reviews;
+    //     setDummyReviews(dummyReviewList);
+    // }, [product])
+
+    // console.log(dummyReviews);
     return (
         <div>
             <div className='spy-10'>
-                {reviews.length === 0 && (
+                {!reviews && !dummyReviews && (
                     <div>
                         <p className='text-xs lg:text-base italic text-center'>No reviews on this product yet.</p>
                     </div>
                 )}
-                {reviews.length > 0 && reviews.map((item, i) => (
+
+                {reviews && reviews.map((item, i) => (
                     <div key={i || item.uuid} className="bg-gray-100 border-[0.5px] border-gray-200 mt-2 rounded">
                         {/* RATING DETAILS */}
-                        <div className="flex items-center bg-gray-200 w-full px-3 py-1 gap-1">                       
-                            <Rating readonly={true} initialValue={Number(item.rating)} size={18} allowFraction={true} />
-                            <span className="text-gray-600 text-xs pt-[2px] font-bold">
-                                {item.rating && labels[(item.rating * 2) - 1]}
-                            </span>
+                        <div className="flex items-center justify-between bg-gray-200 w-full px-3 py-1 ">                       
+                            <div className='flex items-center gap-1'>
+                                <Rating readonly={true} initialValue={Number(item.rating)} size={18} allowFraction={true} />
+                                <span className="text-gray-600 text-xs pt-[2px] font-bold">
+                                    {item.rating && labels[(item.rating * 2) - 1]}
+                                </span>
+                            </div>
+                            <div className='text-gray-600 text-xs'>
+                                {item.posted_on ? formatDate(item.posted_on) : "Just now"}
+                            </div>
                         </div>
                         
                         <div className='p-3'>
@@ -85,6 +102,56 @@ export default function Reviews({ reviews, onDelete }) {
                         </div>
                     </div>
                 ))}
+
+                {dummyReviews && dummyReviews.map((item, i) => (
+                    <div key={i} className="bg-gray-100 border-[0.5px] border-gray-200 mt-2 rounded">
+
+                        <div className="flex items-center justify-between bg-gray-200 w-full px-3 py-1 ">                       
+                            <div className="flex items-center justify-between bg-gray-200 w-full px-3 py-1 ">                       
+                                <div className='flex items-center gap-1'>
+                                    <Rating readonly={true} initialValue={Number(item.rating)} size={18} allowFraction={true} />
+                                    <span className="text-gray-600 text-xs pt-[2px] font-bold">
+                                        {item.rating && labels[(item.rating * 2) - 1]}
+                                    </span>
+                                </div>
+                                <div className='text-gray-600 text-xs'>
+                                    {formatDate(item.date)}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='p-3'>
+                            <div className="flex gap-2 py-1">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="mt-1 block w-3 h-3 text-gray-400" viewBox="0 0 975.036 975.036">
+                                    <path d="M925.036 57.197h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.399 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l36 76c11.6 24.399 40.3 35.1 65.1 24.399 66.2-28.6 122.101-64.8 167.7-108.8 55.601-53.7 93.7-114.3 114.3-181.9 20.601-67.6 30.9-159.8 30.9-276.8v-239c0-27.599-22.401-50-50-50zM106.036 913.497c65.4-28.5 121-64.699 166.9-108.6 56.1-53.7 94.4-114.1 115-181.2 20.6-67.1 30.899-159.6 30.899-277.5v-239c0-27.6-22.399-50-50-50h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.4 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l35.9 75.8c11.601 24.399 40.501 35.2 65.301 24.399z"></path>
+                                </svg>
+
+                                <Typography className="text-xs mb-2"> {item.comment}</Typography>
+                            </div>
+
+                            <div className="flex justify-between items-center">
+                                <div className="flex">
+                                    <div style={{ backgroundColor: `${colors[Math.floor(Math.random() * colors.length)]}`}} className="w-8 h-8 text-black rounded-full flex justify-center items-center text-xl font-bold"> 
+                                        {item.reviewerName.slice(0,1).replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())}
+                                    </div>
+
+                                    <span className="flex-grow flex flex-col pl-4">
+                                        {item.reviewerName && 
+                                            <p className="text-xs font-bold text-gray-900">{item.reviewerName.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())}</p>
+                                        }
+                                        <span className="text-gray-600 text-[10px]">Customer</span>
+                                    </span>
+                                </div>
+                                <div className='h-7'>
+                                    {user && item.author_id === user.uuid && (
+                                        <button className="bg-red-700 hover:bg-red-600 px-2 w-full h-full text-xs text-black" onClick={() => deleteReview(item.uuid)}>Delete</button>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );
@@ -94,11 +161,12 @@ Reviews.propTypes = {
     reviews: PropTypes.arrayOf(
         PropTypes.shape({
             uuid: PropTypes.string.isRequired,
-            rating: PropTypes.number.isRequired,
+            rating: PropTypes.string.isRequired,
             body: PropTypes.string.isRequired,
             author_id: PropTypes.string.isRequired,
             author_name: PropTypes.string, // Assuming author_name is optional
         })
     ).isRequired,
-    onDelete: PropTypes.func.isRequired
+    onDelete: PropTypes.func.isRequired,
+    dummyReviews: PropTypes.array
 };

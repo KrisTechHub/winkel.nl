@@ -1,9 +1,10 @@
-import { LOGIN, LOGOUT,SET_USER,  SET_REDIRECT_AFTER_LOGIN, CLEAR_REDIRECT_AFTER_LOGIN } from '../actions/authActions.jsx';
+import { LOGIN, LOGOUT,SET_USER,  SET_REDIRECT_AFTER_LOGIN, CLEAR_REDIRECT_AFTER_LOGIN, UPDATE_IS_SELLER } from '../actions/authActions.jsx';
 
 const initialState = {
     isLoggedIn: false,
     user: null,
     redirectAfterLogin: null,
+    isSeller: false,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -13,6 +14,7 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 user: action.payload,
                 isLoggedIn: true,
+                isSeller: action.payload.isSeller,
             };
         case LOGOUT:
             return {
@@ -25,7 +27,14 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload,
+                isSeller: action.payload.isSeller,
                 isLoggedIn: true,
+            };
+        case UPDATE_IS_SELLER:
+            return {
+                ...state,
+                isSeller: action.payload,
+                user: { ...state.user, isSeller: action.payload }
             };
         case SET_REDIRECT_AFTER_LOGIN:
             return {

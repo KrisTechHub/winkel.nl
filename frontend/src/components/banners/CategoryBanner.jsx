@@ -28,7 +28,7 @@ export default function CategoryBanner ({ bannerData }) {
       <div className="flex flex-col md:flex-row overflow-hidden">
         <div style={bannerStyle} className='h-[250px] md:h-[350px] w-full order-1 md:order-2'></div>
 
-        <div className="flex flex-row text-white max-w-full md:w-[375px] order-2 md:order-1">
+        <div className="flex flex-row text-white max-w-full md:w-[375px] order-2 md:order-1 ">
             <div className='relative top-[-96px] md:top-0'>
                 <div className='w-full'>
                     { isMediumScreen && (

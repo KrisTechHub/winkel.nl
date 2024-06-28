@@ -6,7 +6,7 @@ const queryAsync = util.promisify(db.query).bind(db);
 
 
 export const index = async (req, res) => {
-    const q = "SELECT * FROM products";
+    const q = "SELECT * FROM newdata";
     const data = await queryAsync(q);
     res.send(data);
 };
@@ -14,7 +14,7 @@ export const index = async (req, res) => {
 //view single product detail
 export const showProduct = async (req, res) => {
     const uuid = req.params.uuid;
-    const q = `SELECT * FROM products WHERE uuid = '${uuid}'`;
+    const q = `SELECT * FROM newdata WHERE uuid = '${uuid}'`;
     const data = await queryAsync(q);
     res.send(data);
 };
@@ -27,7 +27,7 @@ export const addProduct = async (req, res) => {
     const thumbnailPath = req.files.thumbnail[0].path;
     const imagesPath = req.files.images.map(img => (img.path));
     const imagesPathString = JSON.stringify(imagesPath);
-    const q = "INSERT INTO products (uuid, title, description, price, location, color, size, brand, category, stock, discount, thumbnail, images, author_id, authorName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    const q = "INSERT INTO newdata (uuid, title, description, price, location, color, size, brand, category, stock, discount, thumbnail, images, author_id, authorName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
     const values = [productId, title, description, price, location, color, size, brand, category, stock, discount, 
         thumbnailPath, imagesPathString, author_id, author_name];
     console.log('data', req.body, req.files);
@@ -42,10 +42,21 @@ export const updateProduct = async (req, res) => {
     const thumbnailPath = req.files.thumbnail ? req.files.thumbnail[0].path : null;
 
     // Fetch current images from the database
-    const fetchImagesQuery = "SELECT * FROM products WHERE uuid = ?";
+    const fetchImagesQuery = "SELECT * FROM newdata WHERE uuid = ?";
     const currentProduct = await queryAsync(fetchImagesQuery, [uuid]);
 
-    const currentImages = JSON.parse(currentProduct[0].images);
+    let currentImages;
+    if (typeof currentProduct[0].images === 'string') {
+        try {
+            currentImages = JSON.parse(currentProduct[0].images);
+        } catch (error) {
+            console.error("Error parsing current images:", currentProduct[0].images);
+            return res.status(400).json({ message: "Invalid images data in database" });
+        }
+    } else {
+        currentImages = currentProduct[0].images;
+    }
+    
     const imagesToDelete = JSON.parse(req.body.imagesToDelete || '[]');
 
     // Filter out images that need to be deleted
@@ -56,11 +67,7 @@ export const updateProduct = async (req, res) => {
     const finalImages  = [...updatedImages, ...newImages];
     const imagesPathString = JSON.stringify(finalImages );
 
-    const q = "UPDATE products SET title=?, description=?, price=?, location=?, color=?, size=?, brand=?, category=?, stock=?, discount=?, thumbnail=?, images=? WHERE uuid=?";
-    console.log('thumbnailPath', thumbnailPath);
-    console.log('currentProduct', currentProduct);
-    console.log('currentProduct[0].thumbnail', currentProduct[0].thumbnail);
-
+    const q = "UPDATE newdata SET title=?, description=?, price=?, location=?, color=?, size=?, brand=?, category=?, stock=?, discount=?, thumbnail=?, images=? WHERE uuid=?";
     const values = [
         title, description, price, location, color, size, brand, category, stock, discount,
         thumbnailPath || currentProduct[0].thumbnail, imagesPathString, uuid
@@ -74,7 +81,7 @@ export const updateProduct = async (req, res) => {
 //delete product
 export const deleteProduct = async (req, res) => {
     const uuid = req.params.uuid;
-    const q = `DELETE FROM products WHERE uuid='${uuid}'`;
+    const q = `DELETE FROM newdata WHERE uuid='${uuid}'`;
     const data = await queryAsync(q);
     res.send(data);
 };

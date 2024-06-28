@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import logo from "../../assets/logo.svg";
+import logo from "../../assets/logo-light.svg";
 import Search from './Search';
 import SearchBtn from './SearchBtn';
 import NavList from "./NavList";
 import Logout from '../userForm/Logout';
-import { Bars3Icon, XMarkIcon, UserIcon, HeartIcon, ShoppingCartIcon, UserCircleIcon, ShoppingBagIcon, ArrowRightStartOnRectangleIcon, CurrencyEuroIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, CubeIcon ,XMarkIcon, BuildingStorefrontIcon, UserIcon, HeartIcon, ShoppingCartIcon, UserCircleIcon, QueueListIcon, ArrowRightStartOnRectangleIcon, CurrencyEuroIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { Collapse, IconButton } from "@material-tailwind/react";
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -27,18 +27,28 @@ export default function Navbar () {
       },
       {
           label: "Orders",
-          icon: <ShoppingBagIcon className="dropdown-icon" />,
+          icon: <QueueListIcon className="dropdown-icon" />,
           link: !user ? 'auth/redirect' : `user/${user.uuid}/orders`
       },
       {
-          label: "Settings",
+          label: "User Settings",
           icon: <Cog6ToothIcon className="dropdown-icon" />,
           link: '/maintenance'
       },
       {
-          label: "Be a seller",
+          label: "Be a Seller",
           icon: <CurrencyEuroIcon className="dropdown-icon" />,
-          link: '/maintenance'
+          link: '/seller/register'
+      },
+      {
+          label: "Seller Center",
+          icon: <BuildingStorefrontIcon className="dropdown-icon" />,
+          link: user ? `/user/profile/${user.uuid}/seller-page` : ''
+      },
+      {
+        label: "Add product",
+        icon: <CubeIcon className="dropdown-icon" />,
+        link: '/product/form'
       },
       {
           label: <Logout />,
@@ -49,12 +59,12 @@ export default function Navbar () {
 
     const mobileDropdownItems = [
       {
-        label: "Favorites",
+        label: "Favorieten",
         icon: <HeartIcon className="dropdown-icon" />,
         link: isLoggedIn ? `/user/${user.uuid}/favorites` : '/auth/redirect'
       },
       {
-        label: "Cart",
+        label: "Winkelwagen",
         icon: <ShoppingCartIcon className="dropdown-icon" />,
         link: isLoggedIn ? `/user/${user.uuid}/cart` : '/auth/redirect'
       },
@@ -77,13 +87,15 @@ export default function Navbar () {
 
     }, []);
 
+    // console.log(user.isSeller);
+
     return (
-      <nav className="bg-primary-50 fixed top-0 w-full z-10">
-        <div className="container mx-auto py-1.5 sm:py-2 md:py-4 lg:py-6 text-black">
+      <nav className="bg-primary-50 fixed top-0 w-full z-50">
+        <div className="container mx-auto py-1.5 sm:py-2 md:py-4 lg:py-6 text-white">
             <div className="flex w-full">
 
               {/* HAMBURGER & LOGO */}
-              <div className="w-3/12 flex lg:justify-center">
+              <div className="w-3/12 flex lg:justify-center gap-3">
                   {/* HAMBURGER ICON */}
                   <div>
                       <button className="text-inherit focus:bg-transparent active:bg-transparent lg:hidden bg-transparent shadow-none hover:shadow-none border-none hover:bg-transparent hover:text-secondary-400 transition-hover duration-200 ease-in-out"
@@ -106,7 +118,7 @@ export default function Navbar () {
 
               <div className="w-9/12 mx-3">
                 {/* SEARCH AND ICONS */}
-                <div className="flex items-center justify-center text-black">
+                <div className="flex items-center justify-center text-white">
 
                     {/* SEARCH CONTAINER */}
                     <div className="w-9/12 mx-6">
@@ -114,13 +126,13 @@ export default function Navbar () {
                     </div>
 
                     {/* USER ICONS */}
-                    <div className={`flex w-3/12 justify-center items-center ${isMobileScreen && "gap-1" }`} >
+                    <div className={`flex w-3/12 justify-center items-center ${isMobileScreen ? "gap-1" : ""}`} >
                       {isMobileScreen && (
                         <div><SearchBtn /></div>
                       )}
 
                       { !isMobileScreen ? (
-                          <div className="flex justify-center items-center">
+                          <div className="flex justify-center items-center w-full">
                             {/* heart icon */}
                             <Link to={ isLoggedIn ? `/user/${user.uuid}/favorites` : '/auth/redirect' } >
                                 <HeartIcon className="nav-icon h-6 lg:h-7" />
@@ -131,7 +143,7 @@ export default function Navbar () {
                             </Link>
 
                             {isLoggedIn ? (
-                              <div className="dropdown mt-[-8px]">
+                              <div className="dropdown mt-[-8px] ">
                                   <div className="dropbtn flex lg:gap-1 text-sm lg:text-base login-icon font-bold justify-center items-center">
                                       <UserIcon className="nav-icon h-6 lg:h-7" />
                                       {user.firstname.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())}
@@ -141,7 +153,9 @@ export default function Navbar () {
                                       {dropdownItems.map((item, index) => (
                                           <div key={index}>
                                             <Link to={item.link}>
-                                                <div className="flex gap-2 items-center w-full dropdown-item">
+                                                <div className={`flex gap-2 items-center w-[200px] dropdown-item text-black 
+                                                    ${user.isSeller && item.label === "Be a Seller" ? "hidden" : "flex"} 
+                                                    ${!user.isSeller && (item.label === "Add product" || item.label === "Seller Center") ? "hidden" : "block"}`}>
                                                     {item.icon}
                                                     <p> {item.label} </p>
                                                 </div>
@@ -154,7 +168,7 @@ export default function Navbar () {
                               <Link to={'/user/register'}>
                                 <div className="flex lg:gap-1 text-sm lg:text-base login-icon font-bold w-20 lg:w-auto  justify-center items-center">
                                   <UserIcon className="nav-icon h-6 lg:h-7" />
-                                  Log in
+                                  Inloggen
                                 </div>
                               </Link>
                             )}
@@ -200,7 +214,7 @@ export default function Navbar () {
                       <Link to={item.link}>
                           <div className="flex gap-2 items-center w-full dropdown-item">
                               {item.icon}
-                              <p> {item.label} </p>
+                              <p className={item.link === '#' ? '-ms-5' : '' }> {item.label} </p>
                           </div>
                       </Link>
                   </div>

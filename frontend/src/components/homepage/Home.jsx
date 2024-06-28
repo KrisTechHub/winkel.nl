@@ -10,29 +10,22 @@ import CategoryContainer from '../categories/CategoryContainer';
 import FlashDeals from './FlashDeals';
 import HomeFeature from './HomeFeature';
 import GalleryComponent from './GalleryComponent';
+import { useSelector } from 'react-redux';
+
 
 export default function Home () {
-    const [ products, setProducts ] = useState([]);
+    const products = useSelector(state => state.products.products);
     // const [ open, setOpen ] = useState(false);
     const [isLargeScreen, setIsLargeScreen] = useState(true);
 
-
     // const toggleCollapse = () => setOpen((cur) => !cur);
+
 
     useEffect(() => {
         const handleWindowResize = () => {
             setIsLargeScreen(window.innerWidth >= 1024);
         };
-
-        const fetchProducts = async () => {
-            const data = await ProductsService();
-            if (data) {
-                setProducts(data)
-            }
-        };
-
         handleWindowResize();
-        fetchProducts();
 
         window.addEventListener("resize", handleWindowResize);
         return () => {
@@ -60,11 +53,9 @@ export default function Home () {
                         <Products products={products} extendedStyle="flex flex-wrap justify-between mx-2" widthEach="w-[48%] sm:w-[32%] md:w-[24%]" sliceStartIndex={0} numOfItem={12}/>
                     )}
 
-                    <div>
-                        <Link to={'category/allproducts'}>
-                            <button className='mt-5 flex mx-auto font-bold justify-center gap-2'>Show more <ArrowDownIcon  className='w-5'/> </button>
-                        </Link>
-                    </div>
+                    <Link to={'category/allproducts'}>
+                        <button className='mt-8 font-bold bg-secondary-500 h-5 sm:h-7 md:h-9 w-20 sm:w-24 md:w-36 text-[10px] sm:text-xs md:text-base md:w-sm'>Show more</button>
+                    </Link>
 
                 </div> 
 

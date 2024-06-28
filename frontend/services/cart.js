@@ -1,5 +1,6 @@
 import axios from "axios";
-const userServer = process.env.VITE_USER_SERVER
+const userServer = `${import.meta.env.VITE_SERVER}/users`;
+
 
 
 export const viewCart = async(uuid) => {

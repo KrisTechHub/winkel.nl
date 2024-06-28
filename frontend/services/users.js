@@ -1,5 +1,5 @@
 import axios from "axios";
-const userServer = process.env.VITE_USER_SERVER
+const userServer = `${import.meta.env.VITE_SERVER}/users`;
 
 export const viewFaves = async(uuid) => {
     try {
@@ -21,6 +21,14 @@ export const deleteProfile = async (uuid) => {
     }
 };
 
+export const fetchUserData = async(uuid) => {
+    try {
+        const res = await axios.get(`${userServer}/profile/${uuid}`);
+        return res.data
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 //fetch all users
 // export const UserService = async() => {

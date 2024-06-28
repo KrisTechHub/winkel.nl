@@ -4,8 +4,8 @@ export default function Search () {
     return (
           <form action="">
               <label htmlFor="search" className="lg:text-lg h-9 lg:h-11 mx-auto relative w-full flex flex-col md:flex-row items-center bg-white border rounded-full shadow-md focus-within:border-gray-300">
-                  <input type="search" id="search-bar" placeholder="What are you looking for?" className="h-9 lg:h-11 px-6 w-full flex-1 outline-none rounded-full" />
-                  <button className="w-auto h-auto m-0.5 px-3 lg:px-5 py-1.5 lg:py-2 bg-secondary-400  rounded-[50px] hover:bg-secondary-500 hover:border-transparent transition-hover duration-200 ease-in-out active:scale-95 border will-change-transform overflow-hidden relative transition-all disabled:opacity-70">
+                  <input type="search" id="search-bar" placeholder="Waar bent u naar op zoek?" className="h-9 lg:h-11 px-6 w-full flex-1 outline-none rounded-full" />
+                  <button className="w-auto h-auto m-0.5 px-3 lg:px-5 py-1.5 lg:py-2 bg-secondary-400  rounded-[50px] hover:bg-gray-900 hover:border-transparent transition-hover duration-200 ease-in-out active:scale-95 border will-change-transform overflow-hidden relative transition-all disabled:opacity-70">
                       <div className="relative">
                           <div className="flex items-center justify-center absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 transition-all">
                             {/* spin */}
@@ -17,7 +17,7 @@ export default function Search () {
 
                           <div className="flex items-center transition-all opacity-1 valid:">
                             <span className="text-sm font-semibold whitespace-nowrap truncate mx-auto">
-                              <svg className="w-[15px] h-[15px] lg:w-5 lg:h-5 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" >
+                              <svg className="w-[15px] h-[15px] lg:w-5 lg:h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" >
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                               </svg>
                             </span>

@@ -4,6 +4,14 @@ import { db } from '../db.js'
 
 const queryAsync = util.promisify(db.query).bind(db);
 
+//fetch user data'
+export const userData = async (req, res) => {
+    const {uuid} = req.params;
+    const q = `SELECT * FROM users WHERE uuid = '${uuid}'`;
+    const data = await queryAsync(q);
+    res.send(data);
+};
+
 //delete user profile
 export const deleteProfile = async(req, res) => {
     const uuid = req.params.uuid;
@@ -11,6 +19,16 @@ export const deleteProfile = async(req, res) => {
     const data = await queryAsync(q);
     res.send(data);
 };
+
+//register as seller
+export const sellerRegister = async(req, res) => {
+    const {sellerId, isSeller} = req.body;
+    const isSellerBool = Boolean(isSeller);  // Ensure isSeller is boolean
+    const q = 'UPDATE users SET isSeller=? WHERE uuid=?';
+    const data = await queryAsync(q, [isSellerBool, sellerId]);
+    res.send(data);
+};
+
 
 //view all favorites of a user
 export const viewFavorites = async(req, res) => {
@@ -26,7 +44,7 @@ export const viewFavorites = async(req, res) => {
         FROM
             favorites f
         JOIN
-            products p ON f.product_uuid = p.uuid
+            newdata p ON f.product_uuid = p.uuid
         WHERE
             f.customer_uuid = '${uuid}'`;
     const data =  await queryAsync(q);

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
-import { p } from '@material-tailwind/react';
 import logo from '../../assets/logo.svg'
 import Categories from '../categories/Categories';
 import {supportLinks, aboutLinks} from './footerLinks'
@@ -14,7 +13,7 @@ export default function Footer () {
   };
 
     return (
-      <footer className="bg-primary-50 text-gray-600 border-t border-gray-300 w-full mt-12 ">
+      <footer className="bg-gray-100 text-gray-600 border-t border-gray-300 w-full mt-12 ">
         
         <div className="container py-4 md:py-6 lg:py-10 mx-auto">
           <div className="flex flex-wrap justify-between md:text-left text-center">
@@ -37,7 +36,7 @@ export default function Footer () {
             <div className="hidden md:flex lg:w-1/5 md:w-1/3 px-4 flex-col items-start p-4">
               <p className="footer-title text-xs lg:text-sm"> CATEGORIES </p>
               <div>
-                <Categories customizedFont="text-xs lg:text-base" />
+                <Categories customizedFont="text-xs lg:text-base" numOfCateg={13} />
               </div>
             </div>
 
@@ -232,27 +231,26 @@ export default function Footer () {
           </div>
         </div>
 
-        <div className="border-t border-primary-300 w-full">
+        <div className="border-t border-gray-400 w-full">
           <div className="container py-8 md:py-14 flex flex-wrap mx-auto justify-center items-center">
             <div className="flex md:flex-nowrap flex-wrap flex-col justify-center items-center md:items-start md:justify-start font-PoppinsLight">
                 <h1 className="text-base lg:text-2xl text-secondary-400 font-bold">
-                  Always be the first to know
+                Always be the first to know
                 </h1>
                 <p className="leading-7 xl:mb-2 text-xs md:text-sm lg:text-base text-gray-600">
-                  Sign up for our newsletter full of surprising promotions and the
-                  latest products!
+                Sign up for our newsletter full of surprising promotions and the latest products!
                 </p>
-                <input type="text" name="footer-field" placeholder="Enter your email" 
+                <input type="text" name="footer-field" placeholder="Your e-mail adress" 
                   className="mb-2 md:mb-3 mt-1 w-1/2 lg:w-64 xl:w-96 h-6 lg:h-9 xl:h-10 text-xs md:text-base bg-gray-100 bg-opacity-50 rounded-[3px] md:rounded-[5px] lg:rounded-lg border border-secondary-400 focus:ring-2 focus:bg-transparent focus:ring-orange-900 focus:border-orange-900 outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                 />
-                <button className="w-1/2 lg:w-64 xl:w-96 h-6 md:h-8 lg:h-9 xl:h-10 text-xs md:text-base mb-1 md:mb-2 text-white bg-secondary-400 border-0 rounded-[3px] md:rounded-[5px] lg:rounded-lg lg:px-6 focus:outline-none hover:bg-secondary-500 transition-hover duration-200 ease-in-out">
-                  Subscribe to Newsletter
+                <button className="w-1/2 lg:w-64 xl:w-96 h-6 md:h-8 lg:h-9 xl:h-10 text-xs md:text-base mb-1 md:mb-2 text-white bg-secondary-500 border-0 rounded-[3px] md:rounded-[5px] lg:rounded-lg lg:px-6 focus:outline-none hover:bg-secondary-500 transition-hover duration-200 ease-in-out">
+                Subscribe to Newsletter
                 </button>
                 <div>
                   <a href="#" className="text-gray-500 text-xs md:text-sm lg:text-base text-left pr-2 lg:pr-5"> Terms of Service </a>
                   |
                   <a href="#"  className="text-gray-500 text-xs md:text-sm lg:text-base md:mt-0 mt-2 pl-2 lg:pl-5 sm:text-left text-center" >
-                    Privacy Policy
+                  Privacy Policy
                   </a>
                 </div>
             </div>
@@ -265,7 +263,7 @@ export default function Footer () {
         <div className="bg-secondary-400 w-full py-2 lg:py-2 h-12 md:h-full text-white">
           <div className="container mx-auto flex flex-col text-xs lg:text-sm font-PoppinsLight gap-1">
             <p> © 2024 Winkel.nl — All rights reserved. </p>
-            <span> Developed by Kristine Marie Joy Macawile Algario </span>
+            <span> Developed and designed by Kristine Marie Joy Macawile Algario </span>
           </div>
         </div>
       </footer>

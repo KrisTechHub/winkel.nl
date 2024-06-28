@@ -10,7 +10,8 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
     try {
         const uuid = uuidv4();
-        const { firstname, lastname, email, gender, password } = req.body;
+        const { firstname, lastname, email, gender, password, isSeller } = req.body;
+        const isSellerBool = Boolean(isSeller);  // Ensure isSeller is boolean
         const hashedPassword = await bcrypt.hash(password, 10);
         //Check if email already exists
         db.query("SELECT * FROM users WHERE email = ?", [email], (err, results) => {
@@ -22,8 +23,8 @@ router.post("/register", async (req, res) => {
             };
             
             //Insert new user into the database
-            const q = "INSERT INTO users (uuid, firstname, lastname, email, gender, password) VALUES (?, ?, ?, ?, ?, ?)";
-            db.query(q, [uuid, firstname, lastname, email, gender, hashedPassword], (err, data) => {
+            const q = "INSERT INTO users (uuid, firstname, lastname, email, gender, password, isSeller) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            db.query(q, [uuid, firstname, lastname, email, gender, hashedPassword, isSellerBool], (err, data) => {
                 if (err) {
                     return res.status(500).send("Server error, unable to register user.");
                 }

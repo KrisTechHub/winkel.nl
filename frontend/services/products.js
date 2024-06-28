@@ -1,8 +1,6 @@
 import axios from "axios";
-const productServer = process.env.PRODUCT_SERVER;
+const productServer = `${import.meta.env.VITE_SERVER}/products`;
 
-if (productServer) {
-console.log(productServer);  }
 
 //fetch all products
 export const ProductsService = async () => {

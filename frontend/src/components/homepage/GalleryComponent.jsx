@@ -7,7 +7,7 @@ export default function GalleryComponent () {
     const slickSettings = {
         className: "center",
         dots: true,
-        centerMode: true,
+        centerMode: false,
         infinite: true,
         centerPadding: "50px",
         slidesToShow: 3,

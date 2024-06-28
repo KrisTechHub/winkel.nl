@@ -11,7 +11,7 @@ export const viewCartItems = async(req, res) => {
             c.id AS cart_id,
             c.customer_uuid,
             c.quantity,
-            c.product_uuid,
+            c.prod_uuid,
             p.title AS product_title,
             p.description AS product_description,
             p.price AS product_price,
@@ -20,7 +20,7 @@ export const viewCartItems = async(req, res) => {
         FROM
             cart c
         JOIN
-            products p ON c.product_uuid = p.uuid
+            newdata p ON c.prod_uuid = p.uuid
         WHERE
             c.customer_uuid = '${uuid}'`;
     const data = await queryAsync(q);
@@ -36,7 +36,7 @@ export const addToCart = async(req, res) => {
     if (!customerId) {
         return res.status(401).json({ message: 'User not logged in' });
     }
-    const q = 'INSERT INTO cart (id, customer_uuid, quantity, product_uuid) VALUES (?, ?, ?, ?)';
+    const q = 'INSERT INTO cart (id, customer_uuid, quantity, prod_uuid) VALUES (?, ?, ?, ?)';
     await queryAsync(q, [cartId, customerId, quantity, productId])
     res.status(200).json({ message: "Product added to cart."});
 };

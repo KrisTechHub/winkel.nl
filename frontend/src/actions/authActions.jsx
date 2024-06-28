@@ -1,14 +1,16 @@
 import axios from "axios";
+
+//ACTION TYPES
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const SET_USER = 'SET_USER';
 export const SET_REDIRECT_AFTER_LOGIN = 'SET_REDIRECT_AFTER_LOGIN';
 export const CLEAR_REDIRECT_AFTER_LOGIN = 'CLEAR_REDIRECT_AFTER_LOGIN';
-const serverUrl = process.env.VITE_SERVER;
+export const UPDATE_IS_SELLER = 'UPDATE_IS_SELLER';
+const serverUrl = import.meta.env.VITE_SERVER;
 
-console.log(serverUrl);
 
-
+//ACTIONS
 export const login = (user) => ({
     type: LOGIN,
     payload: user,
@@ -16,6 +18,11 @@ export const login = (user) => ({
 
 export const logout = () => ({
     type: LOGOUT,
+});
+
+export const updateIsSeller = (isSeller) => ({
+    type: UPDATE_IS_SELLER,
+    payload: isSeller,
 });
 
 export const setUser = (user) => ({
@@ -31,6 +38,7 @@ export const setRedirectAfterLogin = (url) => ({
 export const clearRedirectAfterLogin = () => ({
     type: CLEAR_REDIRECT_AFTER_LOGIN,
 });
+
 
 export const checkAuthStatus = () => (dispatch) => {
     axios.get(`${serverUrl}/auth/checkAuth`)

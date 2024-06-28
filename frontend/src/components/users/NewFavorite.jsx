@@ -23,16 +23,14 @@ export default function NewFavorite ({btnType, productId, iconClass }) {
         }
         
         const customerId= user.uuid;
-        console.log({customerId});
         try {
-            const res = await axios.post(`${import.meta.env.VITE_USER_SERVER}/${productId}/favorites`, {customerId})
+            const res = await axios.post(`${import.meta.env.VITE_SERVER}/users/${productId}/favorites`, {customerId})
             toast.success(res.data.message)
 
         } catch (error) {
             toast.error(error.response?.data?.message || "Error adding to favorites.");
         }
-
-        
+       
     };
 
     return (

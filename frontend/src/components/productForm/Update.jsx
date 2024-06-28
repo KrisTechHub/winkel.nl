@@ -66,7 +66,7 @@ export default function Update () {
 
         const config = { headers: { 'Content-Type': 'multipart/form-data' } };
         try {
-            const response = await axios.put(`${import.meta.env.VITE_PRODUCT_SERVER}/${uuid}`, formData, config);
+            await axios.put(`${import.meta.env.VITE_SERVER}/products/${uuid}`, formData, config);
             toast.success("Product details updated successfully!");
             navigate(`/product/${uuid}`);
         } catch (err) {
@@ -77,7 +77,7 @@ export default function Update () {
 
     return (
         <div className='flex flex-col justify-center items-center text-center'>
-            <div className='w-4/6 h-[120vh] bg-primary-50 flex flex-col justify-start items-center relative'>
+            <div className='w-4/6 h-[120vh]  flex flex-col justify-start items-center relative'>
                 <div className='h-96 overflow-hidden relative top-0'>
                     <Typography className='text-secondary-700 font-bold text-3xl absolute left-[40%] top-12'>Happy selling!</Typography>
                     <img className='w-full object-cover' src={bannerImg} alt="" />
@@ -87,7 +87,7 @@ export default function Update () {
                     <form onSubmit={handleSubmit(handleUpdate)} noValidate encType='multipart/form-data'>
                         <div className="flex flex-col items-center w-full bg-white rounded-lg pb-16 py-10">
                             <div className="w-4/6 flex flex-col items-center gap-8">
-                                <Typography className='text-secondary-700 font-bold text-3xl'>New Product</Typography>
+                                <Typography className='text-secondary-700 font-bold text-3xl'>Update Product</Typography>
 
                                 <CustomInput type="text" label="Product name" name="title" {...{required: 'Product name is required'}} register={register}  errors={errors} />
                                 <CustomInput type="text" label="Product description" name="description" {...{required: 'Product description is required', minLength: { value: 5, message: "Description must be at leatst 100 characters"} }} register={register}  errors={errors} />
@@ -146,7 +146,7 @@ export default function Update () {
                                             Back
                                         </Link>
                                     </button>
-                                    <button className='bg-secondary-400 font-bold' type='submit'>SUBMIT</button>
+                                    <button className='bg-secondary-500 font-bold' type='submit'>SUBMIT</button>
                                 </div>
                             </div>
                         </div>

@@ -79,14 +79,22 @@ export default function Cart () {
         }
     };
 
-    // console.log('cart', cart);
 
     return (
         <div className='md:pt-6 lg:pt-12 flex flex-col gap-2 md:gap-3'>
             <ToastContainer position="top-center" autoClose={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss={false} draggable theme="light" />
 
             <div className='flex items-center w-full h-12 gap-2 text-base md:text-xl lg:text-2xl px-12'>
-                <p className='font-bold'>Winkel.nl</p> 
+                {cart.slice(0,1).map((item, i) => (
+                    <div key={i} className='grid grid-cols-10 lg:grid-cols-14'>
+                        <div className='col-span-1'>
+                        </div>
+                        <div className='col-span-9 lg:col-span-12 flex gap-2 text-xs sm:text-sm lg:text-2xl'>
+                            <p className=' text-left font-bold tracking-tight'> {item.product_authorName ? item.product_authorName : 'Winkel Shop'} </p>
+                            <ChatBubbleLeftRightIcon className='w-5 text-secondary-400' />
+                        </div>
+                    </div>
+                ))}
                 <p className='border-l-[1px] text-xs md:text-lg lg:text-xl border-gray-400 ps-2'>Shopping Cart</p>
             </div>
 
@@ -96,7 +104,7 @@ export default function Cart () {
             </div>
 
             {cart.length > 0 && (
-                <div className='flex flex-col gap-1 lg:gap-3'>
+                <div className='flex flex-col gap-1'>
                     <div className='bg-gray-50 border-[1px] border-gray-100 grid grid-cols-10 lg:grid-cols-14 gap-0 py-1 lg:py-3 text-[10px] sm:text-xs lg:text-base font-bold'>
                         <div className='col-span-1'>
                             <input type="checkbox" />
@@ -108,32 +116,23 @@ export default function Cart () {
                         <div className='col-span-1 lg:col-span-2'>Actions</div>
                     </div>
 
+
                     {cart.map((item) => (
                         <div key={item.cart_id} className='bg-gray-50 border-[1px] border-gray-100 py-1 lg:py-3'>
-
-                            {/* CART HEADER */}
-                            <div className='grid grid-cols-10 lg:grid-cols-14'>
-                                <div className='col-span-1'>
-                                    <input type="checkbox" />
-                                </div>
-                                <div className='col-span-9 lg:col-span-12 flex gap-2 text-xs sm:text-sm lg:text-lg'>
-                                    <p className=' text-left font-bold tracking-tight'> {item.product_authorName ? item.product_authorName : 'Winkel Shop'} </p>
-                                    <ChatBubbleLeftRightIcon className='w-5 text-secondary-400' />
-                                </div>
-                            </div>
-
                             {/* ITEMS */}
                             <div className='grid grid-cols-10 lg:grid-cols-14 py-1 lg:py-3 items-center text-[10px] sm:text-xs lg:text-base'>
                                 <div className="col-span-1">
                                     <input type="checkbox" />
                                 </div>
-                                <div className="col-span-3 lg:col-span-5 flex gap-1 lg:gap-6 text-left items-center">
-                                    <img className='w-8 lg:w-14' src={item.product_thumbnail} alt="" />
-                                    <p> {item.product_title} </p>
+                                <div className="col-span-3 lg:col-span-5 ">
+                                    <Link to={`/product/${item.prod_uuid}`} className='flex gap-2 lg:gap-6 text-left items-center'>
+                                        <img className='w-8 sm:w-12 lg:w-14' src={item.product_thumbnail} alt="" />
+                                        <p className=''> {item.product_title} </p>
+                                    </Link>
                                 </div>
                                 <div className="col-span-2 flex flex-col lg:gap-3 justify-center">
                                     <p className='line-through text-gray-500'> €{item.product_price * 2},00 </p>
-                                    <p> €{item.product_price},00 </p>
+                                    <p> {item.product_price.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })} </p>
                                 </div>
                                 <div className="col-span-1 lg:col-span-2 flex items-center justify-center">
                                     <button onClick={() => handleDecrement(item)} className={`border-[1px] border-gray-200 h-4 lg:h-auto lg:w-1/6 rounded-none ${item.quantity === 1 && 'text-gray-500 cursor-not-allowed'}`}>-</button>
@@ -146,9 +145,9 @@ export default function Cart () {
                                 <div className="col-span-1 lg:col-span-2 flex flex-col justify-center items-center lg:gap-2">
                                     <p onClick={() => handleDelete(item.cart_id)} className='text-red-500 cursor-pointer'>Delete</p>
                                     { isLargeScreen ? (
-                                        <NewFavorite btnType="word" productId={item.product_uuid}/>
+                                        <NewFavorite btnType="word" productId={item.prod_uuid}/>
                                     ) : (
-                                        <NewFavorite btnType="icon" iconClass={"w-4 -mt-4"} productId={item.product_uuid}/>
+                                        <NewFavorite btnType="icon" iconClass={"w-4 -mt-4"} productId={item.prod_uuid}/>
                                     )}
                                 </div>
                             </div>
@@ -161,7 +160,7 @@ export default function Cart () {
                         <div className='col-span-3 text-right pe-2'>No. of items:</div>
                         <div className='col-span-1 text-left'>{cart.length}</div>
                         <div className='col-span-2 text-right'>TOTAL PRICE</div>
-                        <div className='col-span-2'> €{totalAmount},00 </div>
+                        <div className='col-span-2'> {totalAmount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })} </div>
                         <div className='col-span-2'>
                             <p className='bg-black text-white lg:px-2 w-full lg:w-2/3 cursor-pointer py-1 rounded font-bold'>Check out</p>
                         </div>

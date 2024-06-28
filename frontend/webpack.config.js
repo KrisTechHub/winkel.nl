@@ -17,7 +17,7 @@ const config = {
 
     //This property defines the file path and the file name which will be used for deploying the bundled file
     output: {
-        path: path.join(__dirname, '/dist'),
+        path: path.join(__dirname, 'dist'),
         filename: 'index.bundle.js',
     },
 
@@ -118,15 +118,15 @@ const config = {
     // Set webpack mode to development or production
     mode: process.env.NODE_ENV || 'development',
 
-        devServer: {
-            static: {
-              directory: path.join(__dirname, 'dist'),
-            },
-            compress: true,
-            port: 9000,
-            open: true,
-            hot: true,
-            historyApiFallback: true
+    devServer: {
+        static: {
+          directory: path.join(__dirname, 'dist'),
+        },
+        compress: true,
+        port: 9000,
+        open: true,
+        hot: true,
+        historyApiFallback: true
     },
 
 
@@ -138,7 +138,7 @@ const config = {
             // Add more aliases as needed for your project
         },
         
-    }
+    },
     // watch: true,
 };
 

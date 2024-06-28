@@ -10,8 +10,8 @@ export default function CategoryContainer () {
                 {categBanner.slice(1, 13).map((categData, index) => (
                     <Link to={`/category/${categData.categ}`} key={index}>
                         <div className='flex flex-col md:flex-row items-center justify-start rounded-full md:bg-gray-200 hover:drop-shadow-md md:ps-1.5 md:py-1 w-11 md:w-32 lg:w-[170px] 2xl:w-[200px] my-1.5 mx-2 lg:mx-3 transition-hover duration-200 ease-in-out'>
-                            <div className='h-11 w-11 lg:h-14 lg:w-14 p-1.5 rounded-full overflow-hidden bg-gray-100 md:bg-white'>
-                                <img src={categData.thumbnail} alt={categData.label} />
+                            <div className='h-11 w-11 lg:h-14 lg:w-14 p-1.5 rounded-full overflow-hidden bg-gray-100 md:bg-white flex items-center'>
+                                <img src={categData.thumbnail} alt={categData.label} className='object-cover' />
                             </div>
                             <p className='text-center md:text-left text-[9px] md:text-xs lg:text-[14px] ps-2 lg:font-bold'>
                                 {categData.categ.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())}

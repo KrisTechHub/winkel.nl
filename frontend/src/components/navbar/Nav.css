@@ -8,14 +8,15 @@
 
 .navlist .link2 {
     transition: border-bottom 0.1s ease-in-out;
-    padding: 11px 0;
+    padding: 10px 0;
     letter-spacing: -0.015em;
     font-weight: 600;
     font-size: 11px;
 }
 
 .navlist .links:hover, .link2:hover {
-    border-bottom: 2px solid #e45c00;
+    border-bottom: 4px solid #d45500; 
+    /* e45c00 */
 }
 
 .login-icon {
@@ -30,7 +31,7 @@
 
 
 .nav-icon:hover, .login-icon:hover {
-    color: #e45c00;
+    color: #d3d3d3;
 }
 
 .dropdown-icon {
@@ -54,6 +55,7 @@
     transition: hover 0.2s ease-in-out;
     padding: 5px;
     margin: 2px 0;
+    color: #ffffff;
 }
 
 .dropdown-item:hover {
@@ -61,6 +63,7 @@
 }
 
 .dropdown-content {
+    color: black;
     display: none;
     position: absolute;
     background-color: #ffffff;

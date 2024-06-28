@@ -75,16 +75,18 @@ export default function Favorites () {
 
                                 {/* ITEMS */}
                                 <div className='grid grid-cols-10 py-1 lg:py-3 items-center text-[10px] sm:text-xs lg:text-base'>
-                                    <div className="col-span-4 flex gap-2 lg:gap-6 text-left items-center">
-                                        <img className='w-8 sm:w-12 lg:w-14' src={item.product_thumbnail} alt="" />
-                                        <p className=''> {item.product_title} </p>
+                                    <div className="col-span-4 ">
+                                        <Link to={`/product/${item.product_uuid}`} className='flex gap-2 lg:gap-6 text-left items-center'>
+                                            <img className='w-8 sm:w-12 lg:w-14' src={item.product_thumbnail} alt="" />
+                                            <p className=''> {item.product_title} </p>
+                                        </Link>
                                     </div>
                                     <div className="col-span-4 lg:col-span-3">
                                         <p className='text-left'> {item.product_description.length > 47 ? item.product_description.slice(0, 47) + "..." : item.product_description} </p>
                                     </div>
                                     <div className="col-span-1 lg:col-span-2 flex flex-col lg:gap-3 justify-center text-left lg:text-center">
-                                        <p className='line-through text-gray-500'> €{item.product_price * 2},00 </p>
-                                        <p> €{item.product_price},00 </p>
+                                        <p className='line-through text-gray-500'> {(item.product_price * 2).toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })} </p>
+                                        <p>{item.product_price.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })} </p>
                                     </div>
                                     <div className="col-span-1 flex flex-col lg:gap-2 items-center">
                                         <p  className='text-red-500 cursor-pointer -mb-4 lg:mb-0'>Delete</p>
@@ -103,9 +105,9 @@ export default function Favorites () {
                     <div className='bg-gray-50 border-[1px] border-gray-100 grid grid-cols-10 gap-0 py-1 lg:py-3 lg:px-8 mb-3 font-bold items-center text-[10px] sm:text-xs lg:text-base'>
                         <div className='col-span-2 text-left sm:text-right pe-2'>No. of items:</div>
                         <div className='col-span-1 text-left'>{favorites.length}</div>
-                        <div className='col-span-3 lg:col-span-4 text-right'>Items Total Price</div>
-                        <div className='col-span-2'> €{totalAmount},00 </div>
-                        <div className='cols-span-2 lg:col-span-1'>
+                        <div className='col-span-3 text-right'>Items Total Price</div>
+                        <div className='col-span-2'> {totalAmount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })} </div>
+                        <div className='col-span-1 lg:col-span-2'>
                             <Link to={`/user/${uuid}/cart`}>
                                 <p className='bg-black text-white w-full lg:px-2 cursor-pointer py-1 rounded font-bold'>Go to Cart</p>
                             </Link>

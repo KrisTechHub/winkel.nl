@@ -63,7 +63,7 @@ export default function FlashDeals ({ data }) {
             <Slider {...slickSettings} >
                 {onSale.map((item) => (
                     <div key={item.uuid} className="px-1 md:px-1 lg:px-2 xl:px-2">
-                        <Link to={`/product/${item.id}`}>
+                        <Link to={`/product/${item.uuid}`}>
                             <div className="overflow-hidden relative h-28 md:h-44 lg:h-56 2xl:h-64 rounded">
                                 <img src={item.thumbnail} alt={item.title} className="h-full w-full object-cover" />
                             </div>
@@ -73,7 +73,7 @@ export default function FlashDeals ({ data }) {
                                     {item.title.length > 29 ? item.title.slice(0, 29) + '...' : item.title}
                                 </p>
                                 <div className="flex text-red-500 gap-1 items-center">
-                                    <p className='text-[12px] md:text-[14px] md:text-lg font-bold'>€{item.price.toLocaleString()} </p>
+                                    <p className='text-[12px] md:text-[14px] md:text-lg font-bold'>{item.price.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })} </p>
                                     <p className='text-[8px] md:text-xs border-[0.5px] border-red-500 px-0.5 lg:px-1'>-{Math.round(item.discount)}%</p>
                                 </div>
                             </div>

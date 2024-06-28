@@ -24,7 +24,7 @@ const FeatureItem = ({ items }) => {
         <div className='flex flex-row gap-2 md:gap-3'>
             {items.slice(0, 3).map((item, i) => (
                 <div key={i} className='w-1/2 md:rounded-lg hover:drop-shadow-xl bg-white transition-hover duration-300 ease-in-out '>
-                    <Link to={`/product/${item.id}`}>
+                    <Link to={`/product/${item.uuid}`}>
                         <div className="overflow-hidden h-4/6 md:h-5/6 rounded">
                             <img src={item.thumbnail} alt={item.title} className="h-full w-full object-cover hover:scale-105 transition-scale duration-300 ease-in-out" />
                         </div>
@@ -34,7 +34,7 @@ const FeatureItem = ({ items }) => {
                                 {item.title.length > 24 ? item.title.slice(0, 24) + '...' : item.title}
                             </p>
                             <div className="flex text-black gap-1 items-center">
-                                <p className='text-xs md:text-[14px] lg:text-lg font-bold'>€ {item.price.toLocaleString()} </p>
+                                <p className='text-xs md:text-[14px] lg:text-lg font-bold'>{item.price.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })} </p>
                                 <p className='text-[9px] md:text-[10px] border-[1px] border-black px-1'>-{Math.round(item.discount)}%</p>
                             </div>                        
                         </div>

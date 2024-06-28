@@ -11,7 +11,7 @@ export default function Products ({products, extendedStyle, sliceStartIndex, num
     return (
         <div className={`${extendedStyle}`}>
         {products.slice(sliceStartIndex, numOfItem).map((product) => (
-          <div key={product.uuid} className={`${widthEach} h-[350px] md:h-[320px] my-2 rounded-2xl md:rounded-lg hover:drop-shadow-xl bg-gray-100 transition-hover duration-300 ease-in-out`}>
+          <div key={product.uuid} className={`${widthEach} h-[300px] md:h-[320px] my-2 rounded-2xl md:rounded-lg hover:drop-shadow-xl bg-gray-100 transition-hover duration-300 ease-in-out`}>
             <Link to={`/product/${product.uuid}`} >
             {/* to={`/product/${product.uuid}`} */}
             
@@ -21,14 +21,14 @@ export default function Products ({products, extendedStyle, sliceStartIndex, num
               </div>
   
               {/* PRODUCT DETAILS */}
-              <div className="flex flex-col mx-1 pt-1 h-1/5 md:h-[22%] overflow-hidden text-left">
+              <div className="flex flex-col mx-1 pt-1 h-2/5 md:h-[22%] overflow-hidden text-left">
                   <Typography color="blue-gray" className="text-sm md:text-[15px] max-h-8 -mb-1 " >
                     {product.title.length > 20 ? product.title.slice(0, 20).replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase()) + ' ' : product.title.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())}
                   </Typography>
                   <ProductRating productId={product.uuid} size={16} fontSize={"text-xs"}/>
                   <div className='flex justify-between -my-2'>
                       <div className="flex text-black gap-2 items-center">
-                        <Typography className='text-lg font-bold'>€{product.price.toLocaleString()} </Typography>
+                        <Typography className='text-lg font-bold'>{product.price.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })} </Typography>
                         <Typography className='text-[10px] md:text-xs text-red-500 border-[1px] border-red-500 px-1'>-{Math.round(product.discount)}%</Typography>
                       </div>
                       <div className='flex items-center gap-1'>

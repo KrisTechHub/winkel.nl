@@ -63,17 +63,29 @@ export default withMT({
           700: "#a67c00"
         },
         primary: {
-          50: "#fee9da", //main
-          100: "#fedfc9",
+          50: "#141414", //main fee9da
+          100: "#fee9da",
           200: "#fed5b9",
           300: "#ffcba9",
-          400: "#ffbd90",
+          400: "#ffbd90", //ffbd90
           500: "#ffb380",
           600: "#ffa970",
           700: "#ffa05f",
           800: "#ff964f",
           900: "#ff8c3f",
-          950: "#ff822e"
+          950: "#ff822e",
+
+          // 50: "#fee9da", //main 
+          // 100: "#fedfc9",
+          // 200: "#fed5b9",
+          // 300: "#ffcba9",
+          // 400: "#ffbd90", //
+          // 500: "#ffb380",
+          // 600: "#ffa970",
+          // 700: "#ffa05f",
+          // 800: "#ff964f",
+          // 900: "#ff8c3f",
+          // 950: "#ff822e"
         }
         ,
         secondary: {
@@ -81,14 +93,27 @@ export default withMT({
           100: "#ff7416",
           200: "#ff6a06",
           300: "#f46200",
-          400: "#e45c00", //main
+          400: "#141414", //main  e45c00
           500: "#d45500",
           600: "#c34f00",
           700: "#b34800",
           800: "#a34100",
           900: "#923b00",
           950: "#823400",
-          1000: "#6a2a00"
+          1000: "#6a2a00",
+
+          // 50: "#ff7d26",
+          // 100: "#ff7416",
+          // 200: "#ff6a06",
+          // 300: "#f46200",
+          // 400: "#e45c00", //main  
+          // 500: "#d45500",
+          // 600: "#c34f00",
+          // 700: "#b34800",
+          // 800: "#a34100",
+          // 900: "#923b00",
+          // 950: "#823400",
+          // 1000: "#6a2a00"
         },
         customColors: randomColor
       },
@@ -97,7 +122,8 @@ export default withMT({
         'KronaOne': ['KronaOneRegular', 'sans-serif'],
         'FamiljenGroteskMedium': ['FamiljenGroteskMedium', 'sans-serif'],
         'PoppinsLight': ['PoppinsLight', 'sans-serif'],
-        'Sacramento': ['SacramentoRegular', 'sans-serif']
+        'Sacramento': ['SacramentoRegular', 'sans-serif'],
+        'ArchivoBlack': ['ArchivoBlack', 'sans-serif'],
       },
       dropShadow: {
         // Define custom drop-shadow with a specific color

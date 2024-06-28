@@ -17,36 +17,32 @@ const RegisterComponent = ({ login }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const redirectAfterLogin = useSelector((state) => state.auth.redirectAfterLogin);
+    const [isSeller, setIsSeller] = useState(false); // State to track isSeller status
 
     const onSubmit = (formData) => {
+            formData.isSeller = isSeller;
+            console.log('isseller', isSeller);
+            console.log('formData', formData);
             axios.post(`${import.meta.env.VITE_SERVER}/auth/register`, formData)
-            .then(res => {
-                const user = res.data.user;
-                dispatch(login(user));
-                console.log(res.data);
-                toast.success(res.data.message);
-                dispatch(clearRedirectAfterLogin());
-                setTimeout(() => {
-                    navigate(redirectAfterLogin || '/', { replace: true })
-                }, 3000)
-            }).catch (err => {
-                toast.error(err.response.data.message)
-            })
+                .then(res => {
+                    const user = res.data.user;
+                    dispatch(login(user));
+                    console.log(res.data);
+                    toast.success(res.data.message);
+                    dispatch(clearRedirectAfterLogin());
+                    setTimeout(() => {
+                        navigate(redirectAfterLogin || '/', { replace: true })
+                    }, 3000)
+                }).catch (err => {
+                    toast.error(err.response.data.message)
+                })
 
     };
   
     return (
         <div>
-            <ToastContainer
-                position="top-center"
-                autoClose={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss={false}
-                draggable
-                theme="light"
-                />
+            <ToastContainer position="top-center" autoClose={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss={false} draggable theme="light" />
+
             <div className="form-container sign-up-container px-6">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='flex flex-col items-center w-2/3 mb-3'>
@@ -94,6 +90,10 @@ const RegisterComponent = ({ login }) => {
                                <div className='flex justify-center items-center'>
                                     <CustomInput type="radio" label="Female" name="gender" value="Female" {...{required: 'Gender is required'}} register={register}  errors={errors} />
                                </div>
+                            </div>
+                            <div className="flex items center">
+                                <input type="checkbox" id='isSeller' checked={isSeller} onChange={(e) => setIsSeller(e.target.checked)} className='mr-2' />
+                                <label htmlFor="isSeller">Register as a seller</label>
                             </div>
                         </div>
                     </div>

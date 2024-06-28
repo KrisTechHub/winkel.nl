@@ -1,5 +1,5 @@
 import axios from "axios";
-const productServer = process.env.PRODUCT_SERVER
+const productServer = `${import.meta.env.VITE_SERVER}/products`;
 
 //fetch reviews selected product
 export const ReviewService = async (uuid) => {

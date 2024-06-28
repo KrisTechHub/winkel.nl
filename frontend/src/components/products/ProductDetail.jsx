@@ -4,9 +4,10 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import { useParams, Link } from "react-router-dom";
 import { HomeIcon, ShareIcon , TagIcon, TruckIcon, CreditCardIcon, UserGroupIcon, CurrencyEuroIcon, ArrowLeftEndOnRectangleIcon } from '@heroicons/react/24/solid';
 import { ToastContainer } from 'react-toastify';
-import { ProductService } from '../../../services/products';
 import { ReviewService } from '../../../services/reviews';
 import { Typography } from '@material-tailwind/react';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteProducts } from '../../store/productSlice';
 import NewFavorite from '../users/NewFavorite';
 import NewReview from '../reviews/NewReview';
 import Reviews from '../reviews/Reviews';
@@ -16,29 +17,40 @@ import ProductRating from '../reviews/ProductRating';
 
 
 export default function ProductDetail() {
+    const user = useSelector(state => state.auth.user)
+    const products = useSelector(state => state.products.products);
     const [isLargeScreen, setIsLargeScreen] = useState(false);
-    const [product, setProduct] = useState([]);
+    const [product, setProduct] = useState([])
     const [reviews, setReviews] = useState([]);
     const [ images,  setImages ] = useState([]);
     const [ deliveryRange, setDeliveryRange ] = useState('');
+    const [ discountedPrice, setDiscountedPrice ] = useState(0);
     const { uuid } = useParams();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (uuid && products.length > 0) {
+            const item = products.filter(item => item.uuid === uuid)[0];
+            setProduct(item);
+        }
+    }, [uuid, products])
     
     useEffect(() => {
+        if (product.images) {
+            const imgsArray = product.images;
+            const transformedImg = imgsArray.map((imgUrl) => ({
+                original: imgUrl,
+                thumbnail: imgUrl
+            }));
+            setImages(transformedImg);
+        }
 
-        //FETCH PRODUCTS BY CATEGORY
-        const fetchProduct = async () => {
-            const data = await ProductService(uuid);
-            if (data) {
-                setProduct(data);
-                const imgsArray = JSON.parse(data.images);
-                const transformedImg = imgsArray.map((imgUrl, index) => ({
-                  original: imgUrl,
-                  thumbnail: imgUrl
-                }));
-                setImages(transformedImg);
-            } 
-        };
-        
+        if (product.discount) {
+            const decimal = product.discount / 100;
+            const mult = product.price * decimal;
+            setDiscountedPrice(product.price - mult);
+        }
+
         //FETCH REVIEWS
         const fetchReviews = async () => {
             const data = await ReviewService(uuid);
@@ -52,7 +64,6 @@ export default function ProductDetail() {
             setIsLargeScreen(window.innerWidth >= 1024);
         };
         
-        fetchProduct();
         fetchReviews();
         handleWindowResize();
   
@@ -60,7 +71,7 @@ export default function ProductDetail() {
         return () => {
             window.removeEventListener("resize", handleWindowResize);
         };
-    }, [uuid]);
+    }, [uuid, product]);
 
     useEffect(() => {
         const calculateDeliveryDate = (days) => {
@@ -77,18 +88,18 @@ export default function ProductDetail() {
         setDeliveryRange(calculateDeliveryDate(2))
     }, [])
 
-    // const handleDelete = async () => {
-    //     const confirmDelete = window.confirm(
-    //         "Are you sure you want to delete this product?"
-    //     );
-    //     if (confirmDelete) {
-    //         await DeleteProduct(uuid);
-    //         toast.success("Product has been deleted successfully.")
-    //         setTimeout(() => {
-    //             navigate('/');
-    //         }, 2000)
-    //     }
-    // };
+    const handleDelete = async () => {
+        const confirmDelete = window.confirm(
+            "Are you sure you want to delete this product?"
+        );
+        if (confirmDelete) {
+            dispatch(deleteProducts(product.uuid))
+            toast.success("Product has been deleted successfully.")
+            setTimeout(() => {
+                navigate('/');
+            }, 2000)
+        }
+    };
 
     const addReview = (newReview) => {
         setReviews((prevReviews) => [...prevReviews, newReview]);
@@ -150,12 +161,12 @@ export default function ProductDetail() {
 
                             {/* REVIEWS */}
                             <Typography className='text-gray-900 text-base lg:text-xl font-bold my-5 border-b-[1px] border-gray-400'>Customer Reviews</Typography>
-                            {reviews.length > 0 && (
-                                <div className='text-black rounded p-2 bg-gray-100'>
-                                    <ProductRating productId={product.uuid} size={22} fontSize={"text-sm ms-1"} /> 
-                                </div>
-                            )}
-                            <Reviews reviews={reviews} onDelete={handleDeleteReview}/>
+                            <div className='text-black rounded p-2 bg-gray-100'>
+                                {(reviews.length > 0 || product.rating !== 0) && (
+                                    <ProductRating size={22} fontSize={"text-sm ms-1"} showNum={true}/> 
+                                )}
+                            </div>
+                            <Reviews reviews={reviews} onDelete={handleDeleteReview} dummyReviews={product.reviews}/>
                         </div>
                     )}
                 </div>
@@ -166,10 +177,12 @@ export default function ProductDetail() {
                     <div className='border-b-[1px] lg:pb-2 border-gray-300'>
                         <h2 className="text-sm title-font text-gray-500 tracking-widest"> {product.brand} </h2>
                         <h1 className="text-gray-900 text-xl lg:text-3xl font-bold mb-1">{product.title}</h1>
-                                    {/* REVIEWS */}
+                        {/* REVIEWS */}
                         <div className="flex w-full items-center">
-                            <div className="w-1/2">
-                                <ProductRating productId={product.uuid} size={18} fontSize={"text-sm ms-1"} />
+                            <div className='w-1/2'>
+                            {(reviews.length > 0 || product.rating) && (
+                                    <ProductRating size={22} fontSize={"text-sm ms-1"} showNum={true} /> 
+                                )}
                             </div>
 
                             {/* SHARE ON SOCIAL MEDIA */}
@@ -198,13 +211,13 @@ export default function ProductDetail() {
 
                     {/* PRICE */}
                     <div className='flex flex-col gap-1'>
-                        <div className="flex gap-2 lg:gap-3 items-end">
-                            <Typography className="font-bold text-xl lg:text-3xl text-black">€{product.price ? product.price.toLocaleString() : 'N/A'}</Typography>
-                            <Typography className="font-bold text-lg lg:text-2xl line-through">€{(product.price * 2).toLocaleString()}</Typography>
+                        <div className="flex gap-2 lg:gap-4 items-end">
+                            <Typography className="font-bold text-xl lg:text-3xl text-black">{discountedPrice.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })}</Typography>
+                            <Typography className="font-bold text-lg lg:text-2xl line-through">{product.price ? product.price.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' }) : '00,00'}</Typography>
                         </div>
                         <div className='flex lg:items-center gap-2'>
                             <TagIcon className='h-4 mt-1 lg:mt-0'/>
-                            <Typography>Save <span className='text-[12px] lg:text-sm text-red-500 font-bold'> 50%</span> when you purchase before the sale ends</Typography>
+                            <Typography>Save <span className='text-[12px] lg:text-sm text-red-500 font-bold'> {product.discount}%</span> when you purchase before the sale ends</Typography>
                         </div>
                     </div>
             
@@ -253,7 +266,7 @@ export default function ProductDetail() {
                     {/* POLICY AND DELIVERY */}
                     <div className='flex flex-col gap-2 lg:gap-3 bg-gray-200 w-full lg:w-3/4 rounded p-4'>
                         <Typography className='text-sm lg:text-base font-bold text-black'>Shipping within 
-                            <span className='font-normal'> Netherlands</span> & to <span className='font-normal	'>Germany</span>
+                            <span className='font-normal'> Netherlands</span> & <span className='font-normal	'>Germany</span>
                         </Typography>
                         <div>
                             <div className="flex gap-2">
@@ -281,7 +294,7 @@ export default function ProductDetail() {
                                 <Typography className='text-xs lg:text-sm font-bold text-black'> Return Policy</Typography>
                             </div>
                             <div className='ps-7'>
-                                <Typography className='text-xs'>Learn More</Typography>
+                                <Typography className='text-xs'>{product.returnPolicy ? product.returnPolicy : ""}</Typography>
                             </div>
                         </div>
 
@@ -298,27 +311,71 @@ export default function ProductDetail() {
 
                     {/* DESCRIPTION */}
                     <div className='text-left w-full lg:w-3/4'>
-                        <Typography className='border-b-[1px] lg:py-3 border-gray-400 text-gray-900 tex-base lg:text-lg font-bold lg:mb-1'>Product Description</Typography>
-                        <Typography className='border-b-[1px] py-3 text-xs lg:text-base border-gray-300 text-black'> {product.description} </Typography>
-                        <div className='flex border-b-[1px] py-3 border-gray-300 justify-between'>
-                        <Typography className='text-xs lg:text-base'>Availability</Typography>
-                        <Typography className={`font-bold text-xs lg:text-base ${product.stock > 0 ? 'text-green-500' : 'text-red-500'}`}> {product.stock ? "Available" : "Not availale"} </Typography>
+                        <Typography className='border-b-[1px] lg:py-2 border-gray-400 text-gray-900 tex-base lg:text-lg font-bold lg:mb-1'>Product Description</Typography>
+                        <Typography className='border-b-[1px] py-2 text-xs lg:text-sm border-gray-300 text-black'> {product.description} </Typography>
+                        <div className='flex border-b-[1px] py-2 border-gray-300 justify-between'>
+                            <Typography className='text-xs lg:text-sm'>Availability</Typography>
+                            <Typography className={`font-bold text-xs lg:text-sm ${product.stock > 0 ? 'text-green-500' : 'text-red-500'}`}> {product.stock ? "In Stock" : "Out of stock"} </Typography>
                         </div>
-                        <div className='flex border-b-[1px] py-3 border-gray-300 justify-between'>
-                        <Typography className='text-xs lg:text-base'>Stocks</Typography>
-                        <Typography className='text-black text-xs lg:text-base'> {product.stock} </Typography>
+                        <div className='flex border-b-[1px] py-2 border-gray-300 justify-between'>
+                            <Typography className='text-xs lg:text-sm'>Stocks</Typography>
+                            <Typography className='text-black text-xs lg:text-sm'> {product.stock} </Typography>
                         </div>
-                        <div className='flex border-b-[1px] py-3 border-gray-300 justify-between'>
-                        <Typography className='text-xs lg:text-base'>Category</Typography>
-                        { product.category && (
-                            <Typography className='text-black text-xs lg:text-base'> {product.category.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())} </Typography>
-                        )}
+                        <div className='flex border-b-[1px] py-2 border-gray-300 justify-between'>
+                            <Typography className='text-xs lg:text-sm'>Size</Typography>
+                            { product.category && (
+                                <Typography className='text-black text-xs lg:text-sm'> {product.size ? product.size : "Unspecified"} </Typography>
+                            )}
+                        </div>
+                        <div className='flex border-b-[1px] py-2 border-gray-300 justify-between'>
+                            <Typography className='text-xs lg:text-sm'>Weight</Typography>
+                            { product.weight && (
+                                <Typography className='text-black text-xs lg:text-sm'> {product.weight} </Typography>
+                            )}
+                        </div>
+                        <div className='flex border-b-[1px] py-2 border-gray-300 justify-between'>
+                            <Typography className='text-xs lg:text-sm'>Seller</Typography>
+                            <Typography className='text-black text-xs lg:text-sm'> {product.authorName ? product.authorName.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase()) : 'Winkel.nl shop'} </Typography>
+                        </div>
+                        <div className='flex border-b-[1px] py-2 border-gray-300 justify-between'>
+                            <Typography className='text-xs lg:text-sm'>Warranty Information</Typography>
+                            { product.warrantyInformation && (
+                                <Typography className='text-black text-xs lg:text-sm'> {product.warrantyInformation.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())} </Typography>
+                            )}
+                        </div>
+                        <div className='flex border-b-[1px] py-2 border-gray-300 justify-between'>
+                            <Typography className='text-xs lg:text-sm'>Shipping Information</Typography>
+                            { product.shippingInformation && (
+                                <Typography className='text-black text-xs lg:text-sm'> {product.shippingInformation.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())} </Typography>
+                            )}
+                        </div>
+                        <div className='flex border-b-[1px] py-2 border-gray-300 justify-between'>
+                            <Typography className='text-xs lg:text-sm'>Minimum Order Quantity</Typography>
+                            { product.minimumOrderQuantity && (
+                                <Typography className='text-black text-xs lg:text-sm'> {product.minimumOrderQuantity} </Typography>
+                            )}
+                        </div>
+                        <div className='flex border-b-[1px] py-2 border-gray-300 justify-between'>
+                            <Typography className='text-xs lg:text-sm'>Category</Typography>
+                            { product.category && (
+                                <Typography className='text-black text-xs lg:text-sm'> {product.category.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())} </Typography>
+                            )}
+                        </div>
+                        <div className='flex border-b-[1px] py-2 border-gray-300 justify-between'>
+                            <Typography className='text-xs lg:text-sm'>Tags</Typography>
+                            { product.tags && (
+                                <Typography className='text-black text-xs lg:text-sm'> {product.tags.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())} </Typography>
+                            )}
                         </div>
                     </div>
+
+                    {user && product.author_id === user.uuid && (
+                        <button onClick={handleDelete} className='w-2/3 bg-red-600 font-bold text-black'>Delete Product</button>
+                    )}
+
                 </div>
-
-
             </div>
+
             { !isLargeScreen && (
                 <div className='text-left px-5 lg:px-0 mt-6'>
                     { product.uuid && 
@@ -327,12 +384,12 @@ export default function ProductDetail() {
 
                     {/* REVIEWS */}
                     <Typography className='text-gray-900 text-base lg:text-xl font-bold my-5 border-b-[1px] border-gray-400'>Customer Reviews</Typography>
-                    {reviews.length > 0 && (
+                    {(reviews.length > 0 || product.rating) && (
                         <div className='text-black rounded p-2 bg-gray-100'>
-                            <ProductRating productId={product.uuid} size={22} fontSize={"text-sm ms-1"} /> 
+                            <ProductRating size={22} fontSize={"text-sm ms-1"} /> 
                         </div>
                     )}
-                    <Reviews reviews={reviews} onDelete={handleDeleteReview}/>
+                    <Reviews reviews={reviews} onDelete={handleDeleteReview} dummyReviews={product.reviews}/>
                 </div>
             )}
 

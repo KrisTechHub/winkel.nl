@@ -19,6 +19,12 @@ import sunglasses from '../../assets/banners/sunglasses.jpeg'
 import automotive from '../../assets/banners/automotive.jpg'
 import motorcycle from '../../assets/banners/motorcycle.jpg'
 import lighting from '../../assets/banners/lighting.jpg'
+import beauty from '../../assets/banners/beauty.jpg'
+import mobile from '../../assets/banners/mobile.jpg'
+import sports from '../../assets/banners/sports.jpg'
+import tablet from '../../assets/banners/tablet.jpg'
+import vehicle from '../../assets/banners/vehicle.jpg'
+import kitchen from '../../assets/banners/kitchen.jpg'
 
 //CATEGORY THUMBNAIL IMAGES
 import phone from '../../assets/thumbnails/smartphone.png';
@@ -41,6 +47,12 @@ import sunglass from '../../assets/thumbnails/sunglasses.png';
 import auto from '../../assets/thumbnails/automotive.png';
 import moto from '../../assets/thumbnails/motorcycle.png';
 import lights from '../../assets/thumbnails/lighting.png';
+import cosmetic from '../../assets/thumbnails/cosmetic.webp';
+import mobileth from '../../assets/thumbnails/mobile.png';
+import sportth from '../../assets/thumbnails/sportth.png';
+import tabletth from '../../assets/thumbnails/tabletth.png';
+import car from '../../assets/thumbnails/car.png';
+import utensils from '../../assets/thumbnails/utensils.png';
 
 export const categBanner = [
     {  
@@ -49,8 +61,62 @@ export const categBanner = [
         subtitle: "Shop more, save more!",
         description: "Enjoy season discounts and masive savings!",
         bannerImg: sunglasses,
-        thumbnail: phone,
-        bgColor: "#e17055" // gray-500
+        // thumbnail: phone,
+        bgColor: "#ffcba9" // gray-500
+    },
+    {
+        categ: "beauty",
+        title: "Beauty Essentials",
+        subtitle: "Glow inside and out.",
+        description: "Discover your beauty routine with our premium products.",
+        bannerImg: beauty,
+        thumbnail: cosmetic,
+        bgColor: "#ff6b81" // red-400
+    },
+    {
+        categ: "mobile-accessories",
+        title: "Mobile Accessories",
+        subtitle: "Accessorize your tech.",
+        description: "Upgrade your smartphone experience with our accessories.",
+        bannerImg: mobile,
+        thumbnail: mobileth,
+        bgColor: "#0984e3" // blue-600
+    },
+    {
+        categ: "sports-accessories",
+        title: "Sports Accessories",
+        subtitle: "Gear up for action.",
+        description: "Enhance your performance with our top-notch sports gear.",
+        bannerImg: sports,
+        thumbnail: sportth,
+        bgColor: "#00b894" // green-400
+    },
+    {
+        categ: "tablets",
+        title: "Latest Tablets",
+        subtitle: "Portability meets power.",
+        description: "Experience ultimate convenience with our range of tablets.",
+        bannerImg: tablet,
+        thumbnail: tabletth,
+        bgColor: "#6c5ce7" // purple-400
+    },
+    {
+        categ: "vehicle",
+        title: "Vehicle Models",
+        subtitle: "Drive in style.",
+        description: "Upgrade your ride with our premium vehicle models.",
+        bannerImg: vehicle,
+        thumbnail: car,
+        bgColor: "#141414" // red-600
+    },
+    {
+        categ: "kitchen-accessories",
+        title: "Kitchen Accessories",
+        subtitle: "Cook like a pro.",
+        description: "Enhance your culinary skills with our kitchen essentials.",
+        bannerImg: kitchen,
+        thumbnail: utensils,
+        bgColor: "#fdcb6e" // yellow-500
     },
     {  
         categ: "smartphones",

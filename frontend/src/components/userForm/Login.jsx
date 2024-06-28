@@ -17,11 +17,11 @@ export default function Login()  {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = (formData) => {
-        axios.post(`${process.env.VITE_SERVER}/auth/login`, formData)
+        axios.post(`${import.meta.env.VITE_SERVER}/auth/login`, formData)
             .then(res => {
                     const user = res.data.user;
+                    user.isSeller = Boolean(user.isSeller)
                     dispatch(login(user));
-                    console.log(res.data);
                     toast.success(res.data.message);
                     dispatch(clearRedirectAfterLogin());
                     setTimeout(() => {

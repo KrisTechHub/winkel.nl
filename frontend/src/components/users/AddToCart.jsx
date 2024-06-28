@@ -26,13 +26,12 @@ export default function AddToCart ({ btnType, productId, iconClass }) {
 
         const customerId= user.uuid;
         const quantity = 1;
-        console.log({customerId, quantity});
 
         try {
-            const res = await axios.post(`${process.env.VITE_USER_SERVER}/${productId}/cart`, { customerId, quantity });
+            const res = await axios.post(`${import.meta.env.VITE_SERVER}/users/${productId}/cart`, { customerId, quantity });
             toast.success(res.data.message);
         } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error(error.response?.data?.message || "Error adding to cart.");
         }
     };
 

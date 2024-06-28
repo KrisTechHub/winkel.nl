@@ -2,6 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+
 @font-face {
     font-family: 'ShadowsIntoLightRegular';
     src: url('./assets/fonts/ShadowsIntoLight-Regular.ttf');
@@ -25,6 +26,11 @@
 @font-face {
     font-family: 'SacramentoRegular';
     src: url('./assets/fonts/Sacramento-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'ArchivoBlack';
+    src: url('./assets/fonts/ArchivoBlack-Regular.ttf');
 }
 
 

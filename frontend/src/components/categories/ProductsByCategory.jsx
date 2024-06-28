@@ -47,28 +47,29 @@ export default function ProductsByCategory() {
         ? categBanner.find(allProduct => allProduct.categ === "allproducts")
         : categBanner.find(item => item.categ === category);
 
+    
     return (
         <section className='xl:container mx-auto font-PoppinsLight'>
             <ToastContainer position="top-center" autoClose={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss={false} draggable theme="light" />
 
             <CategoryBanner bannerData={bannerData} />
 
-            <div className='my-8'>
+            <div className='my-8 hidden lg:block'>
                 <p className="text-gray-900 text-base text-left font-bold">
                     <Link to={'/'} className='hover:text-gray-900 '>Home </Link>
                     / {category.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())}
                 </p>
             </div>
 
-            <div className="flex text-left">
+            <div className="flex text-left -mt-32 sm:-mt-24 md:-m-0">
                 {isLargeScreen && (
                     <div className="w-1/6">
-                        <Link to="/category/allproducts" className='cursor-pointer'>All Products</Link>
-                        <Categories />
+                        <Link to="/category/allproducts" className={`cursor-pointer ${category === "allproducts" && 'font-bold'}`}>All Products</Link>
+                        <Categories currentCategory={category} />
                     </div>
                 )}
-                <div className="w-5/6 border-l-[1px] border-gray-300 pl-6">
-                    <Products products={filteredData} extendedStyle="flex flex-wrap gap-1 lg:gap-2 xl:gap-4" widthEach="lg:w-[24%] xl:w-[19%] 2xl:w-[15%]" sliceStartIndex={0} numOfItem={filteredData.length} />
+                <div className="lg:w-5/6 border-l-[1px] border-gray-300 lg:pl-6">
+                    <Products products={filteredData} extendedStyle="flex flex-wrap justify-between lg:justify-start mx-2 lg:gap-3" widthEach="w-[48%] sm:w-[32%] md:w-[24%] lg:w-[24%] xl:w-[19%] 2xl:w-[15%]" sliceStartIndex={0} numOfItem={filteredData.length} />
                 </div>
             </div>
         </section>
