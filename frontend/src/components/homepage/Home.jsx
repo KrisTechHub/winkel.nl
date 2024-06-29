@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { ProductsService } from '../../../services/products';
-import { ArrowDownIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Homebanner from '../banners/Homebanner';

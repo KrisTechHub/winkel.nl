@@ -1,5 +1,5 @@
 import axios from "axios";
-const productServer = `${import.meta.env.VITE_SERVER}/products`;
+const productServer = `${process.env.VITE_SERVER}/products`;
 
 
 //fetch all products

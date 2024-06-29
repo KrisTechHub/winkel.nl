@@ -5,13 +5,15 @@
   text-align: center;
   background-color: #fff;
   box-sizing: border-box;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   height: 100vh;
   font-family: 'PoppinsLight', sans-serif;
 }
 
 * {
   font-family: 'PoppinsLight', sans-serif;
+  overflow-anchor: auto;
+
 }
 
 a, select, option {

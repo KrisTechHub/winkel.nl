@@ -102,7 +102,7 @@ const config = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html',
-            // favicon: './public/favicon.svg'
+            favicon: './src/assets/favicon.svg'
         }),
         new Dotenv({
             // path: `./.env.${process.env.NODE_ENV}`, // Load specific .env file based on NODE_ENV
@@ -123,7 +123,7 @@ const config = {
           directory: path.join(__dirname, 'dist'),
         },
         compress: true,
-        port: 9000,
+        port: 8080,
         open: true,
         hot: true,
         historyApiFallback: true

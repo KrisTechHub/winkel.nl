@@ -51,9 +51,6 @@ export const updateCartItem = async(req, res) => {
 
 export const deleteCartItem = async(req, res) => {
     const { cartId } = req.body;
-
-    console.log({cartId});
-
     const q = `DELETE FROM cart WHERE id = '${cartId}'`;
     const data = await queryAsync(q);
     res.send(data);

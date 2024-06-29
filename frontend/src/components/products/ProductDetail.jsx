@@ -29,6 +29,8 @@ export default function ProductDetail() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+
         if (uuid && products.length > 0) {
             const item = products.filter(item => item.uuid === uuid)[0];
             setProduct(item);

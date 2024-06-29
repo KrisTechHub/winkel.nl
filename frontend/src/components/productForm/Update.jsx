@@ -66,7 +66,7 @@ export default function Update () {
 
         const config = { headers: { 'Content-Type': 'multipart/form-data' } };
         try {
-            await axios.put(`${import.meta.env.VITE_SERVER}/products/${uuid}`, formData, config);
+            await axios.put(`${process.env.VITE_SERVER}/products/${uuid}`, formData, config);
             toast.success("Product details updated successfully!");
             navigate(`/product/${uuid}`);
         } catch (err) {

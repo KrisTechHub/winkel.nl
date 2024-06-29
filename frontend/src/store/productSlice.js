@@ -4,13 +4,13 @@ import axios from 'axios';
 
 // Async thunk for fetching products
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
-    const res = await axios.get(`${import.meta.env.VITE_SERVER}/products`);
+    const res = await axios.get(`${process.env.VITE_SERVER}/products`);
     return res.data;
 });
 
 // Async thunk for deleting a product
 export const deleteProducts = createAsyncThunk('products/deleteProducts', async (productId) => {
-    await axios.delete(`${import.meta.env.VITE_SERVER}/products/${productId}`);
+    await axios.delete(`${process.env.VITE_SERVER}/products/${productId}`);
     return productId; // Return the productId to use it in the reducer
 });
 

@@ -42,8 +42,6 @@ export const addFavorite = async(req, res) => {
 export const deleteFavoriteItem = async(req, res) => {
     const { favoriteId } = req.body;
 
-    console.log({favoriteId});
-
     const q = `DELETE FROM favorites WHERE id = '${favoriteId}'`;
     const data = await queryAsync(q);
     res.send(data);

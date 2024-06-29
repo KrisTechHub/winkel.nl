@@ -13,7 +13,7 @@ export default function Footer () {
   };
 
     return (
-      <footer className="bg-gray-100 text-gray-600 border-t border-gray-300 w-full mt-12 ">
+      <footer className="bg-gray-100 text-gray-600 border-t border-gray-300 w-full mt-12">
         
         <div className="container py-4 md:py-6 lg:py-10 mx-auto">
           <div className="flex flex-wrap justify-between md:text-left text-center">
@@ -247,9 +247,9 @@ export default function Footer () {
                 Subscribe to Newsletter
                 </button>
                 <div>
-                  <a href="#" className="text-gray-500 text-xs md:text-sm lg:text-base text-left pr-2 lg:pr-5"> Terms of Service </a>
+                  <a href="" className="text-gray-500 text-xs md:text-sm lg:text-base text-left pr-2 lg:pr-5"> Terms of Service </a>
                   |
-                  <a href="#"  className="text-gray-500 text-xs md:text-sm lg:text-base md:mt-0 mt-2 pl-2 lg:pl-5 sm:text-left text-center" >
+                  <a href=""  className="text-gray-500 text-xs md:text-sm lg:text-base md:mt-0 mt-2 pl-2 lg:pl-5 sm:text-left text-center" >
                   Privacy Policy
                   </a>
                 </div>

@@ -1,5 +1,5 @@
 import axios from "axios";
-const categoryServer = `${import.meta.env.VITE_SERVER}/category`;
+const categoryServer = `${process.env.VITE_SERVER}/category`;
 
 // fetch products by category
 export const FetchByCategory = async (category) => {

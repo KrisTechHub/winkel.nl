@@ -1,5 +1,5 @@
 import axios from "axios";
-const userServer = `${import.meta.env.VITE_SERVER}/users`;
+const userServer = `${process.env.VITE_SERVER}/users`;
 
 
 

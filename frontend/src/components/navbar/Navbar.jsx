@@ -53,7 +53,7 @@ export default function Navbar () {
       {
           label: <Logout />,
           icon: <ArrowRightStartOnRectangleIcon className="dropdown-icon" />,
-          link: '#'
+          link: ''
       }
     ];
 
@@ -90,7 +90,7 @@ export default function Navbar () {
     // console.log(user.isSeller);
 
     return (
-      <nav className="bg-primary-50 fixed top-0 w-full z-50">
+      <nav className="bg-primary-50  top-0 w-full z-50 fixed">
         <div className="container mx-auto py-1.5 sm:py-2 md:py-4 lg:py-6 text-white">
             <div className="flex w-full">
 
@@ -168,7 +168,7 @@ export default function Navbar () {
                               <Link to={'/user/register'}>
                                 <div className="flex lg:gap-1 text-sm lg:text-base login-icon font-bold w-20 lg:w-auto  justify-center items-center">
                                   <UserIcon className="nav-icon h-6 lg:h-7" />
-                                  Inloggen
+                                  Login
                                 </div>
                               </Link>
                             )}
@@ -214,7 +214,7 @@ export default function Navbar () {
                       <Link to={item.link}>
                           <div className="flex gap-2 items-center w-full dropdown-item">
                               {item.icon}
-                              <p className={item.link === '#' ? '-ms-5' : '' }> {item.label} </p>
+                              <p className={item.link === '' ? '-ms-5' : '' }> {item.label} </p>
                           </div>
                       </Link>
                   </div>

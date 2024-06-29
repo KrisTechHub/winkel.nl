@@ -38,7 +38,7 @@ export default function ValidatedForm () {
 
         const config = { headers: { 'Content-Type': 'multipart/form-data' } };
         try {
-            const response = await axios.post(`${import.meta.env.VITE_SERVER}/products`, formData, config);
+            const response = await axios.post(`${process.env.VITE_SERVER}/products`, formData, config);
             console.log('responsedata', response.data);
             toast.success("Product has been added successfully!");
             navigate('/');

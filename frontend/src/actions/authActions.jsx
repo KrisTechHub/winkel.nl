@@ -7,7 +7,7 @@ export const SET_USER = 'SET_USER';
 export const SET_REDIRECT_AFTER_LOGIN = 'SET_REDIRECT_AFTER_LOGIN';
 export const CLEAR_REDIRECT_AFTER_LOGIN = 'CLEAR_REDIRECT_AFTER_LOGIN';
 export const UPDATE_IS_SELLER = 'UPDATE_IS_SELLER';
-const serverUrl = import.meta.env.VITE_SERVER;
+const serverUrl = process.env.VITE_SERVER;
 
 
 //ACTIONS
