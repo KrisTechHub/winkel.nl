@@ -116,7 +116,7 @@ const config = {
     ],
 
     // Set webpack mode to development or production
-    mode: process.env.NODE_ENV || 'development',
+    mode: 'development',
 
     devServer: {
         static: {
