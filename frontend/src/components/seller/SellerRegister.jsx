@@ -36,20 +36,20 @@ export default function SellerRegister() {
                     <div className='lg:w-1/2 text-left flex flex-col gap-4 lg:gap-8 order-2 lg:order-1'>
                         <div>
                             <div className='flex lg:flex-col gap-2 lg:gap-0 font-bold text-xl lg:text-5xl font-ArchivoBlack'>
-                                <p> Word  </p>
-                                <p> Winkel.nl verkoper </p>
+                                <p> Be a Winkel.nl  </p>
+                                <p> seller </p>
                             </div>
-                            <p className='text-sm lg:text-2xl italic'>Verkoop op uw gemak aan de wereld</p>
+                            <p className='text-sm lg:text-2xl italic'>Sell to the world at your convenience!</p>
                         </div>
-                        <p className='text-sm lg:text-lg'>Vink het vakje hieronder aan om u te registreren als verkoper en begin met het plaatsen van uw producten!</p>
+                        <p className='text-sm lg:text-lg'>Check the box below to register as a seller and start listing your products!</p>
                         <div className="flex flex-col items center gap-2">
                             <div>
                                 <input type="checkbox" id='isSeller' checked={isSeller} onChange={(e) => setIsSeller(e.target.checked)} className='mr-2' />
-                                <label className='lg:text-lg' htmlFor="isSeller">Registreer u als verkoper</label>
+                                <label className='lg:text-lg' htmlFor="isSeller">Register as a sellerr</label>
                             </div>
-                            <button className='bg-black text-white' onClick={handleSubmit}>Verzenden</button>
+                            <button className='bg-black text-white' onClick={handleSubmit}>Submit</button>
                         </div>
-                        <p className='text-xs font-bold'>*Geen registratiekosten</p>
+                        <p className='text-xs font-bold'>*No registration fee</p>
                     </div>
 
                     <div className='lg:w-1/2 order-1 lg:order-2'>

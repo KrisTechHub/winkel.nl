@@ -6,7 +6,7 @@ import { fetchProducts } from './store/productSlice';
 import { checkAuthStatus } from "./actions/authActions";
 import ProtectedRoute from "./ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
-// import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 // MAIN PAGES

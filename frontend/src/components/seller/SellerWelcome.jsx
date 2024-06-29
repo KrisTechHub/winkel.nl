@@ -10,7 +10,7 @@ export default function SellerWelcome () {
         <div className='' >
             <div className='w-full bg-[#bfc2c7] font-bold '>
                 <div className='pt-24'>
-                    <p className='lg:text-4xl pb-1 font-ArchivoBlack'>Welkom bij Verkoper Centraal in</p> 
+                    <p className='lg:text-4xl pb-1 font-ArchivoBlack'>Welcome to Seller Center</p> 
                     <p className='lg:text-5xl font-ArchivoBlack'>Winkel.nl</p>
                 </div>
                 <div className='w-full'>
@@ -19,15 +19,15 @@ export default function SellerWelcome () {
             </div>
 
             <div className='bg-gray-300 py-6 lg:text-xl font-bold'>
-                <p>Meer dan 70% van de Winkelverkopers genereert hun eerste verkoop in minder dan 60 dagen.</p>
+                <p>More than 70% of Retail Sellers generate their first sale in less than 60 days.</p>
             </div>
 
            <div className='flex lg:h-[600px]'>
                 <div className='w-1/2 flex flex-col justify-center text-left gap-4 ps-8'>
-                    <p className='lg:text-4xl font-bold'>Verkoop met de snelst groeiende en <br /> voorkeurskanaal voor acquisitie</p>
-                    <p className='lg:text-2xl'>Ga aan de slag en verdien terwijl u uw <br /> ondernemen op uw gemak.</p>
+                    <p className='lg:text-4xl font-bold'>Sell with the fastest growing and <br /> preferred acquisition channel</p>
+                    <p className='lg:text-2xl'>Get started and earn while you run your <br /> business at your convenience.</p>
                     <Link to={'/product/form'}>
-                        <button className='bg-black text-white w-1/4'>Upload een product</button>
+                        <button className='bg-black text-white w-1/4'>Upload a product</button>
                     </Link>
                 </div>
                 <div className='relative w-1/2'>
