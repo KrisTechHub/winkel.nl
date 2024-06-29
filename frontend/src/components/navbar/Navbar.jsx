@@ -87,6 +87,11 @@ export default function Navbar () {
 
     }, []);
 
+    const handleClick = () => {
+      setOpenNav(false);
+      setOpenUserDropdown(false)
+    }
+
     // console.log(user.isSeller);
 
     return (
@@ -192,7 +197,7 @@ export default function Navbar () {
                 
                 {/* NAV LISTS */}
                 <div className="hidden lg:block mb-[-16px] mx-6 ">
-                  <NavList />
+                  <NavList handleClick={handleClick} />
                 </div>
               </div>
 
@@ -203,7 +208,7 @@ export default function Navbar () {
         
         {/* HAMBURGER OPTIONS */}
         <Collapse open={openNav}>
-          <NavList />
+          <NavList handleClick={handleClick} />
         </Collapse>
 
         {/* USER DROPDOWN OPTIONS */}

@@ -21,7 +21,7 @@ const list2 = [
   },
 ];
 
-export default function NavList() {
+export default function NavList({handleClick}) {
   const user = useSelector(state => state.auth.user);
 
   const list = [
@@ -59,7 +59,7 @@ export default function NavList() {
             {user ? (
               <NavLink className={({ isActive }) =>
                   `links lg:py-[9px] font-PoppinsLight ${isActive ? 'border-b-4 border-secondary-500' : ''} ${link.label === 'Start selling' && user.isSeller ? 'hidden' : 'inline'}`
-                } to={link.action} >
+                } to={link.action} onClick={handleClick} >
                 {link.label}
               </NavLink>
             ) : (
@@ -76,7 +76,7 @@ export default function NavList() {
         {list2.map((link, index) => (
           <div key={index}>
             <NavLink className={({ isActive }) => `link2 font-PoppinsLight ${isActive ? 'border-b-4 border-secondary-500' : ''}`}
-              to={link.action} >
+              to={link.action} onClick={handleClick} >
               {link.label}
             </NavLink>
           </div>
