@@ -23,7 +23,7 @@ const RegisterComponent = ({ login }) => {
             formData.isSeller = isSeller;
             console.log('isseller', isSeller);
             console.log('formData', formData);
-            axios.post(`${import.meta.env.VITE_SERVER}/auth/register`, formData)
+            axios.post(`${process.env.VITE_SERVER}/auth/register`, formData)
                 .then(res => {
                     const user = res.data.user;
                     dispatch(login(user));

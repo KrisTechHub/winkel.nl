@@ -24,7 +24,7 @@ export default function NewFavorite ({btnType, productId, iconClass }) {
         
         const customerId= user.uuid;
         try {
-            const res = await axios.post(`${import.meta.env.VITE_SERVER}/users/${productId}/favorites`, {customerId})
+            const res = await axios.post(`${process.env.VITE_SERVER}/users/${productId}/favorites`, {customerId})
             toast.success(res.data.message)
 
         } catch (error) {

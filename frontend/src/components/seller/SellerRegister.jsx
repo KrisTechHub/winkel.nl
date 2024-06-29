@@ -15,7 +15,7 @@ export default function SellerRegister() {
 
     const handleSubmit = async () => {
         try {
-            await axios.put(`${import.meta.env.VITE_SERVER}/users/seller/register`, { isSeller, sellerId: user.uuid });
+            await axios.put(`${process.env.VITE_SERVER}/users/seller/register`, { isSeller, sellerId: user.uuid });
             dispatch(updateIsSeller(isSeller)); // Update Redux state
             toast.success("Successfully registered as a seller!");
             setTimeout(()=> {

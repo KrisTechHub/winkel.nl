@@ -51,7 +51,7 @@ const slides = [
         title: "VACATION",
         title2: "Guide Style",
         subtitle: "2024",
-        link: "http://localhost:5173/category/womens-dresses",
+        link: "/category/womens-dresses",
         btnText: "SHOP SUMMER SALE",
         btnStyle: "bg-secondary-400 hover:bg-primary-950 text-white",
         titleStyle: "font-KronaOne text-xl md:text-3xl font-bold text-secondary-400 drop-shadow-xl",

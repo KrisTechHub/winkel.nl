@@ -23,7 +23,7 @@ export default function NewReview({ addReview }) {
         formData.author_id = user.uuid;
         formData.product_id = uuid;
         formData.author_name = user.firstname + user.lastname;
-        axios.post(`${import.meta.env.VITE_SERVER}/products/${uuid}/reviews`, formData)
+        axios.post(`${process.env.VITE_SERVER}/products/${uuid}/reviews`, formData)
             .then(async (res) => {
                 const reviews = await ReviewService(uuid); // Fetch updated list of reviews
                 const newReview = reviews.filter(review => review.body === formData.body) //filter the newly added review

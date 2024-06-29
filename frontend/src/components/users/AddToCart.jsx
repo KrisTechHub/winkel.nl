@@ -28,7 +28,7 @@ export default function AddToCart ({ btnType, productId, iconClass }) {
         const quantity = 1;
 
         try {
-            const res = await axios.post(`${import.meta.env.VITE_SERVER}/users/${productId}/cart`, { customerId, quantity });
+            const res = await axios.post(`${process.env.VITE_SERVER}/users/${productId}/cart`, { customerId, quantity });
             toast.success(res.data.message);
         } catch (error) {
             toast.error(error.response?.data?.message || "Error adding to cart.");
