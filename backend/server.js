@@ -1,12 +1,12 @@
-import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config(); //to use .env fileimport express from 'express';
 import session from 'express-session';
 import cors from 'cors';
 import ExpressError from './Utilities/ExpressError.js';
 import passportConfig from './passport.js';
 import sessionConfig from './Utilities/sessionConfig.js';
 import corsOptions from './Utilities/corsOptions.js';
-import dotenv from 'dotenv';
-dotenv.config(); //to use .env file
+
 //ROUTES
 import productRoutes from './routes/products.js';
 import categoryRoutes from './routes/category.js'
