@@ -60,7 +60,7 @@ export default function Favorites () {
         <div className='md:pt-6 lg:pt-12 flex flex-col gap-2 md:gap-3'>
             <ToastContainer position="top-center" autoClose={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss={false} draggable theme="light" />
 
-            <div className='flex items-center w-full h-12 gap-2 text-base md:text-xl lg:text-2xl px-12'>
+            <div className='flex items-center w-full lg:h-12 gap-2 text-base md:text-xl lg:text-2xl px-3 lg:px-12'>
                 <p className='font-bold'>Winkel.nl</p> 
                 <p className='border-l-[1px] text-xs md:text-lg lg:text-xl border-gray-400 ps-2'>Favorites</p>
             </div>
@@ -117,7 +117,7 @@ export default function Favorites () {
                         <div className='col-span-1 text-left'>{favorites.length}</div>
                         <div className='col-span-3 text-right'>Items Total Price</div>
                         <div className='col-span-2'> {totalAmount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })} </div>
-                        <div className='col-span-1 lg:col-span-2'>
+                        <div className='col-span-2 lg:col-span-2'>
                             <Link to={`/user/${user.uuid}/cart`}>
                                 <p className='bg-black text-white w-full lg:px-2 cursor-pointer py-1 rounded font-bold'>Go to Cart</p>
                             </Link>

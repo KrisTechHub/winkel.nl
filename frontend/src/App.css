@@ -12,8 +12,6 @@
 
 * {
   font-family: 'PoppinsLight', sans-serif;
-  overflow-anchor: auto;
-
 }
 
 a, select, option {
@@ -32,7 +30,7 @@ a, select, option {
   width: 36px;
   background-color: #e45c00;
   transition: background-color 300ms ease-in-out;
-  border-radius: 50%;
+  border-radius: 50% !important;
   padding: 8px;
   filter: drop-shadow(0 10px 8px rgba(1, 1, 1, 0.07)) drop-shadow(0 4px 3px rgba(20, 20, 20, 0.114));
 }
@@ -40,6 +38,15 @@ a, select, option {
 .social-btn:hover {
   background-color: #d45500;
 }
+
+@media screen and (max-width: 1023px) {
+  .social-btn {
+    width: 26px;
+    height: 26px;
+    padding: 6px;
+  }
+}
+
 
 
 /* IMAGE GALLERY FOR PRODUCT DETAIL */

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Typography } from '@material-tailwind/react';
 
 export default function DatePeriod () {
     const getFormattedDate = (date) => {
@@ -18,6 +17,6 @@ export default function DatePeriod () {
     };
 
     return (
-        <p className='text-gray-700 lg:text-sm italic tracking-wider font-bold'> {getSalePeriod()} </p>
+        <p className='text-gray-700 text-[11px] lg:text-sm italic tracking-wider font-bold'> {getSalePeriod()} </p>
     );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 const list2 = [
@@ -52,19 +53,20 @@ export default function NavList({handleClick}) {
   ];
 
   return (
-    <div className="text-white navlist flex flex-col lg:flex-row lg:pt-4 justify-between text-base lg:text-[14px] xl:text-base font-FamiljenGroteskMedium">
+    <div className="text-white navlist flex flex-col lg:flex-row lg:pt-4 h-full lg:justify-between font-FamiljenGroteskMedium">
       <div className="mt-6 flex flex-col lg:flex-row gap-2 xl:gap-6 lg:my-0">
         {list.map((link, idx) => (
           <div key={idx}>
             {user ? (
               <NavLink className={({ isActive }) =>
-                  `links lg:py-[9px] font-PoppinsLight ${isActive ? 'border-b-4 border-secondary-500' : ''} ${link.label === 'Start selling' && user.isSeller ? 'hidden' : 'inline'}`
+                  `links lg:py-[9px] font-PoppinsLight text-xs lg:text-sm ${isActive ? 'border-b-4 border-secondary-500' : ''} ${link.label === 'Start selling' && user.isSeller ? 'hidden' : 'inline'}`
                 } to={link.action} onClick={handleClick} >
                 {link.label}
               </NavLink>
             ) : (
-              <NavLink className={({ isActive }) => `links lg:py-[9px] font-PoppinsLight ${isActive ? 'border-b-4 border-secondary-500' : ''}`
-                } to={link.action} >
+              <NavLink className={({ isActive }) => `links lg:py-[9px] font-PoppinsLight text-xs xl.
+              :text-sm ${isActive ? 'border-b-4 border-secondary-500' : ''}`
+                } to={link.action} onClick={handleClick} >
                 {link.label}
               </NavLink>
             )}
@@ -72,10 +74,10 @@ export default function NavList({handleClick}) {
         ))}
       </div>
 
-      <div className="mb-6 flex flex-col items-center lg:flex-row gap-2 xl:gap-6 lg:my-0 text-base lg:text-xs">
+      <div className="mb-6 flex flex-col items-center lg:flex-row gap-2 xl:gap-6 lg:my-0">
         {list2.map((link, index) => (
           <div key={index}>
-            <NavLink className={({ isActive }) => `link2 font-PoppinsLight ${isActive ? 'border-b-4 border-secondary-500' : ''}`}
+            <NavLink className={({ isActive }) => `link2 font-PoppinsLight lg:text-[10px] xl:text-xs ${isActive ? 'border-b-4 border-secondary-500' : ''}`}
               to={link.action} onClick={handleClick} >
               {link.label}
             </NavLink>
@@ -84,4 +86,8 @@ export default function NavList({handleClick}) {
       </div>
     </div>
   );
+}
+
+NavList.propTypes = {
+  handleClick: PropTypes.func
 }

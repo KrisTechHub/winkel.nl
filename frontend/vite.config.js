@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({ path: './.env' });
 
 export default defineConfig({
   plugins: [react()],
@@ -18,4 +18,7 @@ export default defineConfig({
     port: 5173,
     historyApiFallback: true,
   },
+  define: {
+    'process.env': { ...process.env }, // Make process.env available in Vite
+  }
 })

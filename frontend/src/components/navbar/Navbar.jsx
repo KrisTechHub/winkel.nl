@@ -43,7 +43,7 @@ export default function Navbar () {
       {
           label: "Seller Center",
           icon: <BuildingStorefrontIcon className="dropdown-icon" />,
-          link: user ? `/user/profile/${user.uuid}/seller-page` : ''
+          link: user ? `/user/profile/${user.uuid}/seller-page` : '/'
       },
       {
         label: "Add product",
@@ -96,13 +96,13 @@ export default function Navbar () {
 
     return (
       <nav className="bg-primary-50  top-0 w-full z-50 fixed">
-        <div className="container mx-auto py-1.5 sm:py-2 md:py-4 lg:py-6 text-white">
+        <div className="lg:container mx-auto w-full py-1.5 sm:py-2 md:py-4 lg:py-6 text-white">
             <div className="flex w-full">
 
               {/* HAMBURGER & LOGO */}
-              <div className="w-3/12 flex lg:justify-center gap-3">
+              <div className="w-3/12 flex lg:justify-center items-center gap-3 mx-2 lg:mx-0">
                   {/* HAMBURGER ICON */}
-                  <div>
+                  <div className="flex items-center">
                       <button className="text-inherit focus:bg-transparent active:bg-transparent lg:hidden bg-transparent shadow-none hover:shadow-none border-none hover:bg-transparent hover:text-secondary-400 transition-hover duration-200 ease-in-out"
                           onClick={() => setOpenNav(!openNav)} >
                             {openNav ? (
@@ -121,7 +121,7 @@ export default function Navbar () {
                   </div>
               </div>
 
-              <div className="w-9/12 mx-3">
+              <div className={`w-9/12 mx-3 ${isMobileScreen ? 'flex justify-end' : ''}`}>
                 {/* SEARCH AND ICONS */}
                 <div className="flex items-center justify-center text-white">
 
@@ -157,8 +157,8 @@ export default function Navbar () {
                                   <div className="dropdown-content">
                                       {dropdownItems.map((item, index) => (
                                           <div key={index}>
-                                            <Link to={item.link}>
-                                                <div className={`flex gap-2 items-center w-[200px] dropdown-item text-black 
+                                            <Link to={item.link} onClick={handleClick}>
+                                                <div className={`flex gap-2 items-center w-[200px] dropdown-item text-black ${item.link === '' ? '-mt-2' : ''}
                                                     ${user.isSeller && item.label === "Be a Seller" ? "hidden" : "flex"} 
                                                     ${!user.isSeller && (item.label === "Add product" || item.label === "Seller Center") ? "hidden" : "block"}`}>
                                                     {item.icon}
@@ -170,7 +170,7 @@ export default function Navbar () {
                                   </div>
                               </div>
                             ) : (
-                              <Link to={'/user/register'}>
+                              <Link to={'/user/login'}>
                                 <div className="flex lg:gap-1 text-sm lg:text-base login-icon font-bold w-20 lg:w-auto  justify-center items-center">
                                   <UserIcon className="nav-icon h-6 lg:h-7" />
                                   Login
@@ -180,17 +180,22 @@ export default function Navbar () {
                           </div>
 
                       ) : (
-
-                        <div>
-                          <IconButton variant="text" className="text-inherit focus:bg-transparent active:bg-transparent lg:hidden bg-transparent shadow-none hover:shadow-none border-none hover:bg-transparent hover:text-secondary-400 transition-hover duration-200 ease-in-out"
-                              ripple={false} onClick={() => setOpenUserDropdown(!openUserDropdown)} >
-                                {openUserDropdown ? (
-                                  <XMarkIcon className="h-5" strokeWidth={2} />
-                                ) : (
+                          <div>
+                            {isLoggedIn ? (
+                              <IconButton variant="text" className="text-inherit focus:bg-transparent active:bg-transparent lg:hidden bg-transparent shadow-none hover:shadow-none border-none hover:bg-transparent hover:text-secondary-400 transition-hover duration-200 ease-in-out"
+                                    ripple={false} onClick={() => setOpenUserDropdown(!openUserDropdown)} >
+                                      {openUserDropdown ? (
+                                        <XMarkIcon className="h-5" strokeWidth={2} />
+                                      ) : (
+                                        <UserIcon className="nav-icon h-5 lg:h-6" strokeWidth={2} />
+                                      )}
+                              </IconButton> 
+                            ) : ( 
+                                <Link to={'/user/login'}>
                                   <UserIcon className="nav-icon h-5 lg:h-6" strokeWidth={2} />
-                                )}
-                          </IconButton>
-                        </div> 
+                                </Link>
+                            )}
+                          </div> 
                       )}
                     </div>
                 </div>
@@ -207,23 +212,24 @@ export default function Navbar () {
         {/* <div className="border-b-[1px] border-primary-300 w-full"></div> */}
         
         {/* HAMBURGER OPTIONS */}
-        <Collapse open={openNav}>
+        <Collapse open={openNav} className={openNav ? '!h-[100vh]' : ''}>
           <NavList handleClick={handleClick} />
         </Collapse>
 
         {/* USER DROPDOWN OPTIONS */}
-        <Collapse open={openUserDropdown}>
+        <Collapse open={openUserDropdown} className={openUserDropdown ? '!h-[100vh]' : ''} >
           <div className="flex flex-col ps-5">
-              {mobileDropdownItems.map((item, index) => (
-                  <div key={index}>
-                      <Link to={item.link}>
-                          <div className="flex gap-2 items-center w-full dropdown-item">
-                              {item.icon}
-                              <p className={item.link === '' ? '-ms-5' : '' }> {item.label} </p>
-                          </div>
-                      </Link>
-                  </div>
-              ))}
+              { mobileDropdownItems.map((item, index) => (
+                      <div key={index}>
+                          <Link to={item.link} onClick={handleClick}>
+                              <div className={`flex gap-1 lg:gap-2 items-center w-full dropdown-item ${item.link === '' ? '-mt-2' : ''}`}>
+                                  {item.icon}
+                                  <p className={`text-xs ${item.link === '' ? '-ms-3 lg:-ms-5' : ''}` }> {item.label} </p>
+                              </div>
+                          </Link>
+                      </div>
+                  ))
+              }
           </div>
         </Collapse>
       </nav>

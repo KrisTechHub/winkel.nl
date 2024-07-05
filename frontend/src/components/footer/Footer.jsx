@@ -260,8 +260,8 @@ export default function Footer () {
           </div>
         </div>
 
-        <div className="bg-secondary-400 w-full py-2 lg:py-2 h-12 md:h-full text-white">
-          <div className="container mx-auto flex flex-col text-xs lg:text-sm font-PoppinsLight gap-1">
+        <div className="bg-secondary-400 w-full py-2 lg:py-2 h-full text-white">
+          <div className="container mx-auto flex flex-col text-xs lg:text-sm gap-1">
             <p> © 2024 Winkel.nl — All rights reserved. </p>
             <span> Developed and designed by Kristine Marie Joy Macawile Algario </span>
           </div>

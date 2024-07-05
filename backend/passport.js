@@ -1,6 +1,9 @@
 import passport from 'passport';
 import bcrypt from 'bcrypt';
 import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as FacebookStrategy } from 'passport-facebook';
+import { Strategy as TwitterStrategy } from 'passport-twitter';
 import { db } from './db.js';
 
 
@@ -24,6 +27,90 @@ passport.use(new LocalStrategy({
     });
     }
 ));
+
+//GOOGLE SIGN IN
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL:  "/auth/google/callback"
+}, 
+function(accessToken, refreshToken, profile, done) {
+    // console.log('profile from passport config',profile);
+    db.query('SELECT * FROM users WHERE uuid = ?', [profile.id], (err, res) => {
+        if (err) return done(err);
+        if (res.length > 0) {
+            return done(null, res[0]);
+        } else {
+            let newUser = {
+                uuid: profile.id,
+                firstname: profile.name.givenName,
+                lastname: profile.name.familyName,
+                email: profile.emails[0].value,
+                isSeller: 0,
+                gender: 'Female',
+            }
+            // Insert new user
+            const insertUserQuery = 'INSERT INTO users (uuid, firstname, lastname, email, gender, password, isSeller) VALUES (?, ?, ?, ?, ?, ?, ?)';
+            db.query(insertUserQuery, [newUser.uuid,  newUser.firstname,  newUser.lastname, newUser.email, newUser.gender, null, newUser.isSeller], (err) => {
+                if (err) return done(err);
+                return done(null, newUser);
+            });
+        }
+    });
+}));
+
+
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: "/auth/facebook/callback"
+}, function (accessToken, refreshToken, profile, done) {
+    db.query('SELECT * FROM users WHERE uuid = ?', [profile.id], (err, res) => {
+        if (err) return done(err);
+        if (res.length > 0) {
+            return done(null, res[0]);
+        } else {
+            return done(null, profile);
+        }
+    })
+}
+));
+
+//TWITTER SIGN IN
+passport.use(new TwitterStrategy({
+    consumerKey: process.env.TWITTER_API_KEY,
+    consumerSecret: process.env.TWITTER_API_SECRET,
+    callbackURL: "/auth/twitter/callback",
+    includeEmail: true
+}, 
+function(accessToken, refreshToken, profile, done) {
+    // console.log('profile from passport config',profile);
+    db.query('SELECT * FROM users WHERE uuid = ?', [profile.id], (err, res) => {
+        if (err) return done(err);
+        if (res.length > 0) {
+            return done(null, res[0]);
+        } else {
+            console.log(profile);
+            let newUser = {
+                uuid: profile.id,
+                firstname: profile.displayName,
+                lastname: '',
+                email: profile.emails ? profile.emails[0].value : null, // Handle missing email
+                isSeller: 0,
+                gender: 'Female',
+            };
+            const insertUserQuery = 'INSERT INTO users (uuid, firstname, lastname, email, gender, password, isSeller) VALUES (?, ?, ?, ?, ?, ?, ?)';
+            db.query(insertUserQuery, [newUser.uuid, newUser.firstname, newUser.lastname, newUser.email, newUser.gender, null, newUser.isSeller], (err) => {
+                if (err) {
+                    console.error('Error inserting user:', err);
+                    return done(err);
+                }
+                console.log('Successfully entered Twitter info into database');
+                return done(null, newUser);
+            });
+        }
+    });
+}));
 
 //determines which data of the user object should be stored in the session
 passport.serializeUser((user, done) => {

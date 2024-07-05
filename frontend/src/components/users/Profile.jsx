@@ -45,43 +45,43 @@ export default function Profile () {
 
     return (
         <div className='flex flex-col justify-center items-center'>
-            <div className='h-36 w-full' style={{ backgroundColor: `${colors[Math.floor(Math.random() * colors.length)]}`}}></div>
+            <div className='h-36 w-full hidden lg:block' style={{ backgroundColor: `${colors[Math.floor(Math.random() * colors.length)]}`}}></div>
             <ToastContainer position="top-center" autoClose={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss={false} draggable theme="light" />
             
-            <div className='-mt-12 md:w-3/5 '>
-                <div className='flex flex-row w-full '>
-                    <div className='w-full lg:w-2/6 bg-gray-100 border-[0.2px] flex flex-row items-center justify-center py-8 rounded-l-xl'>
-                        <div className='flex flex-col gap-6 items-center w-full'>
-                            <UserCircleIcon className='text-gray-400 border-b-[1px] border-gray-300 w-48'/>
+            <div className='lg:-mt-12 md:w-3/5 '>
+                <div className='flex flex-col lg:flex-row w-full gap-2 lg:gap-0'>
+                    <div className='w-full lg:w-2/6 lg:bg-gray-100 lg:border-[0.2px] flex flex-row items-center justify-center py-3 lg:py-8 lg:rounded-l-xl'>
+                        <div className='flex flex-col gap-3 lg:gap-6 items-center w-full'>
+                            <UserCircleIcon className='text-gray-400 border-b-[1px] border-gray-300 w-24 lg:w-48'/>
                             <div className="flex flex-col items-center justify-center ">
-                                <div className="flex font-bold gap-2">
+                                <div className="flex font-bold gap-2 text-sm lg:text-base">
                                         <p> {user.firstname.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())} </p>
                                         <p> {user.lastname.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())} </p>
                                 </div>
-                                <p> {user.email} </p>
-                                <p> Seller status: {user.isSeller ? 'Seller' : 'Not Seller' } </p>
+                                <p className='text-sm lg:text-base'> {user.email} </p>
+                                <p className='text-sm lg:text-base'> Seller status: {user.isSeller ? 'Seller' : 'Not Seller' } </p>
                             </div>
 
                             {user.registration_date && (
                                 <div className='flex items-center flex-col'>
                                     <div className='italic text-sm flex'>
-                                        <p>Member since {formatDate(user.registration_date)} </p>
+                                        <p className='text-sm lg:text-base'>Member since {formatDate(user.registration_date)} </p>
                                     </div>
                                     <div className='italic text-sm'>
-                                        <p>Last updated on  {formatDate(user.updated_at)} </p>
+                                        <p className='text-sm lg:text-base'>Last updated on  {formatDate(user.updated_at)} </p>
                                     </div>
                                 </div>
                             )}
 
                             <div className='w-full'>
-                                <button onClick={handleDelete} className='bg-primary-50 text-white py-1 w-2/3'>Delete Account</button>
+                                <button onClick={handleDelete} className='bg-secondary-500 text-white text-sm lg:text-base lg:py-1 lg:w-2/3'>Delete Account</button>
                             </div>
                         </div>
                     </div>
                 
-                    <div className='w-full lg:w-4/6 bg-gray-50 text-left p-8 flex flex-col gap-4 rounded-r-xl'>
+                    <div className='w-full lg:w-4/6 lg:bg-gray-50 text-left p-4 lg:p-8 flex flex-col gap-4 lg:rounded-r-xl'>
                         <div className=''>
-                            <div className='font-bold border-b-[1px] border-gray-300 flex justify-between'>
+                            <div className='font-bold border-b-[1px] border-gray-300 flex justify-between text-sm lg:text-base'>
                                 <p>Personal Information</p>
                                 <Link to={'/maintenance'}>
                                     <PencilSquareIcon className='w-5 text-red-600 cursor-pointer' />
@@ -89,25 +89,25 @@ export default function Profile () {
                             </div>
                             <div className='flex flex-col gap-3 py-4'>
                                 <div className=''>
-                                    <div className='flex gap-2'>
+                                    <div className='flex gap-2 text-sm lg:text-base'>
                                         <p>Birthdate: </p>
                                         <p className='italic'>{user.birthdate ? user.birthdate : "Unspecified"}</p>
                                     </div>
-                                    <p>Contact Details</p>
+                                    <p className='text-sm lg:text-base'>Contact Details</p>
                                     <div className='mx-6 flex gap-2 italic'>
                                         <PhoneIcon className='w-4'/>
-                                        <p>{user.phonenumber} </p>
+                                        <p className='text-sm lg:text-base'>{user.phonenumber ? user.phonenumber : 'Unspecified'} </p>
                                     </div>
                                     <div className='mx-6 flex gap-2 italic'>
                                         <EnvelopeIcon className='w-4'/>
-                                        <p>{user.email} </p>
+                                        <p className='text-sm lg:text-base'>{user.email} </p>
                                     </div>
                                 </div>
                                 <div >
-                                    <p>Delivery Address</p>
+                                    <p className='text-sm lg:text-base'>Delivery Address</p>
                                     <div className='italic flex gap-2 mx-6'>
                                         <MapPinIcon className='w-4' />
-                                        <p > {address ? address : "Address unspecified"} </p>
+                                        <p className='text-sm lg:text-base'> {address ? address : "Address unspecified"} </p>
                                     </div>                                
                                 </div>
                             </div>
@@ -115,12 +115,12 @@ export default function Profile () {
 
                         <div>
                             <div className='font-bold border-b-[1px] border-gray-300 flex justify-between'>
-                                <p>Payment Information</p>
+                                <p className='text-sm lg:text-base'>Payment Information</p>
                                 <Link to={'/maintenance'}>
                                     <PencilSquareIcon className='w-5 text-red-600 cursor-pointer' />
                                 </Link>
                             </div> 
-                            <div className='italic py-4 flex gap-2 mx-6'>
+                            <div className='italic py-4 flex gap-2 mx-6 text-sm lg:text-base'>
                                 <CreditCardIcon className='w-4' />
                                 <p >No payment details added.</p>    
                             </div>                       
@@ -128,28 +128,28 @@ export default function Profile () {
                         
                         {user.isSeller && (
                             <div>
-                                <div className='font-bold border-b-[1px] border-gray-300 flex justify-between mb-4'>
+                                <div className='font-bold border-b-[1px] border-gray-300 flex justify-between mb-4 text-sm lg:text-base'>
                                     <p>Seller Details</p>
                                     <Link to={'/maintenance'}>
                                         <PencilSquareIcon className='w-5 text-red-600 cu rsor-pointer' />
                                     </Link>
                                 </div>
                                 <div>
-                                    <div className='italic flex gap-2 mx-6'>
+                                    <div className='italic flex gap-2 mx-6 text-sm lg:text-base'>
                                         <WalletIcon className='w-4' />
-                                        <p>Selling {allProducts.length} products </p>
+                                        <p>Selling {allProducts.length > 0 ? allProducts.length : '0'} products </p>
                                     </div>
-                                    <div className='italic flex gap-2 mx-6'>
+                                    <div className='italic flex gap-2 mx-6 text-sm lg:text-base'>
                                         <BanknotesIcon className='w-4' />
                                         <p>No earnings yet </p>
                                     </div>
                                 </div>
-                                <div className='p-6 flex gap-2 w-full'>
+                                <div className='py-6 lg:p-6 flex gap-2 w-full'>
                                     <Link to={'/product/form'} className='w-full'>
-                                        <button className='bg-primary-200 w-full'>Add product</button>
+                                        <button className='bg-primary-200 w-full text-sm lg:text-base'>Add product</button>
                                     </Link>
                                     <Link to={`/user/profile/${user.uuid}/seller-page`} className='w-full'>
-                                        <button className='bg-secondary-500 w-full'>View seller page</button>
+                                        <button className='bg-secondary-500 w-full text-sm lg:text-base'>View seller page</button>
                                     </Link>
                                 </div>
                             </div>
@@ -158,20 +158,6 @@ export default function Profile () {
                     </div>
                 </div>
             </div>
-
-
-            {/* <h1>User Profile</h1>
-            <p>First name: {user.firstname} </p>
-            <p>Last name: {user.lastname} </p>
-            <p>Email: {user.email} </p>
-            <p>Gender: {user.gender} </p>
-            <Link to={`/user/${user.uuid}/favorites`}>
-                <button>Favorites</button>
-            </Link>
-            <Link to={`/user/${user.uuid}/cart`}>
-                <button>Cart</button>
-            </Link>
-            <Button onClick={handleDelete}>Delete</Button> */}
         </div>
     );
 }

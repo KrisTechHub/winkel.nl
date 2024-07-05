@@ -1,5 +1,4 @@
-// src/App.js
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts } from './store/productSlice';
@@ -25,6 +24,9 @@ import Profile from "./components/users/Profile";
 import Favorites from "./components/users/Favorites";
 import Cart from "./components/users/Cart";
 import Orders from "./components/users/Orders";
+import MobileLogin from "./components/userForm/MobileLogin";
+import MobileRegister from "./components/userForm/MobileRegister";
+import AuthSuccess from "./components/users/AuthSuccess";
 // SELLER PAGES
 import SellerRegister from "./components/seller/SellerRegister";
 import SellerWelcome from "./components/seller/SellerWelcome";
@@ -33,31 +35,53 @@ import SellerPage from "./components/seller/SellerPage";
 import Maintenance from "./components/staticPages/Maintenance";
 import ShippingInfo from "./components/staticPages/ShippingInfo";
 import AuthRedirect from "./components/staticPages/AuthRedirect";
+import Loading from "./components/staticPages/Loading";
+
 
 function App() {
   const dispatch = useDispatch();
   const productStatus = useSelector(state => state.products.status);
+  const products = useSelector(state => state.products.products);
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
 
     dispatch(checkAuthStatus());
 
     if (productStatus === 'idle') {
       dispatch(fetchProducts());
+    } else if (productStatus === 'succeeded' || (productStatus === 'failed' && products.length > 0)) {
+      setIsLoading(false);
     }
-  }, [dispatch, productStatus]);
+
+    const handleWindowResize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024);
+    };
+
+    window.addEventListener("resize", handleWindowResize);
+    handleWindowResize();
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, [dispatch, productStatus, products.length]);
+
+  useEffect(() => {
+    if (productStatus === 'succeeded' || (productStatus === 'failed' && products.length > 0)) {
+      setIsLoading(false);
+    }
+  }, [productStatus, products.length]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
-
     <BrowserRouter>
       <ScrollToTop />
       <Navbar />
-      {productStatus === "idle" && (
-        <div>
-          <p>Loading....</p>
-        </div>
-      )}
       <div className="lg:container mx-auto pt-[53px] lg:pt-[115px] overflow-hidden">
         <Routes>
           {/* MAIN PAGES */}
@@ -70,8 +94,9 @@ function App() {
           } />
           <Route path="/product/update/:uuid" element={<Update />} />
           <Route path="/category/:category" element={<ProductsByCategory />} />
-          <Route path="/user/register" element={<Form />} />
-          <Route path="/seller/register" element={<SellerRegister />} />
+          <Route path="/user/register" element={isLargeScreen ? <Form /> : <MobileRegister/> } />
+          <Route path="/user/login" element={isLargeScreen ? <Form /> : <MobileLogin/> } />
+          <Route path="/seller/register" element={ <SellerRegister />} />
           <Route path="/seller/welcome" element={<SellerWelcome />} />
           <Route path="/user/:uuid/favorites" element={<Favorites />} />
           <Route path="/user/:uuid/cart" element={<Cart />} />
@@ -90,6 +115,7 @@ function App() {
           {/* STATIC PAGES */}
           <Route path="/maintenance" element={<Maintenance />} />
           <Route path="/auth/redirect" element={<AuthRedirect />} />
+          <Route path="/auth/success" element={<AuthSuccess />} />
           <Route path="/shippinginformation" element={<ShippingInfo />} />
         </Routes>
       </div>

@@ -9,7 +9,7 @@ export default function Orders () {
                 <p className='text-sm md:text-base lg:text-xl font-bold'>Check out some products from your cart</p>
                 <p className='text-sm md:text-base lg:text-xl font-bold'>or</p>
                 <p className='text-sm md:text-base lg:text-xl font-bold'>Browse our new products to check sale items today!</p>
-                <Link to={'/category/allproducts'} >
+                <Link to={'/products/most-buy'} >
                     <button className='bg-black text-white w-28 lg:w-40 mt-5 text-xs'>See new trends</button>
                 </Link>
             </div>

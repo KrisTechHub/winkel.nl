@@ -105,7 +105,7 @@ const config = {
             favicon: './src/assets/favicon.svg'
         }),
         new Dotenv({
-            // path: `./.env.${process.env.NODE_ENV}`, // Load specific .env file based on NODE_ENV
+            path: `./.env`, // Load specific .env file based on NODE_ENV
             systemVars: true,
         }),
         // new CopyWebpackPlugin({

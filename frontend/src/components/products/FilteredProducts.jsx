@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
-import FlashDeals from '../homepage/FlashDeals';
 import Products from '../products/Products';
 import DatePeriod from './DatePeriod';
 
@@ -15,7 +14,10 @@ export default function FilteredProducts() {
     const [sortOrder, setSortOrder] = useState('none');
     const [categoryFilter, setCategoryFilter] = useState('');
     const filterRef = useRef(null); // Ref for filter options div
-    const [filterVisible, setFilterVisible] = useState(false);
+    const [sortVisible, setSortVisible] = useState(false);
+    const [filterPriceVisible, setFilterPriceVisible] = useState(false);
+    const [filterCategoryVisible, setFilterCategoryVisible] = useState(false);
+    const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [priceFilters, setPriceFilters] = useState({
         'Less than € 10': false, '€ 10 - 80': false, '€ 80 - 200': false, '€ 200 - 400': false, '€ 400 - 900': false, '€ 900 - 1500': false, '€ 1500 - 3000': false, '€ 3000- 5000': false, 'More than € 5000': false
     });
@@ -24,16 +26,24 @@ export default function FilteredProducts() {
     });
 
     useEffect(() => {
+        const handleWindowResize = () => {
+            setIsSmallScreen(window.innerWidth <= 1024);
+        };
+        handleWindowResize();
+
         const handleOutsideClick = (event) => {
             if (filterRef.current && !filterRef.current.contains(event.target)) {
-                setFilterVisible(false); // Close filter options if clicked outside
+                setSortVisible(false); // Close filter options if clicked outside
+                setFilterPriceVisible(false);
+                setFilterCategoryVisible(false);
             }
         };
-
+        window.addEventListener("resize", handleWindowResize);
         document.addEventListener('mousedown', handleOutsideClick);
 
         return () => {
             document.removeEventListener('mousedown', handleOutsideClick);
+            window.removeEventListener("resize", handleWindowResize);
         };
     }, []);
 
@@ -136,11 +146,12 @@ export default function FilteredProducts() {
 
     const handleSortChange = (order) => {
         setSortOrder(order);
-        setFilterVisible(false); // hide filter options after selection
+        setSortVisible(false); // hide filter options after selection
     };
 
     const showByCateg = (category) => {
         setCategoryFilter(category);
+        setFilterCategoryVisible(false)
     };
 
     const clearPriceFilters = () => {
@@ -155,35 +166,94 @@ export default function FilteredProducts() {
             '€ 3000- 5000': false,
             'More than € 5000': false,
         });
-        // setSortOrder('none');
-        // setFilterVisible(false);
+        setFilterPriceVisible(false);
     };
 
     const clearCategoryFilter = () => {
         setCategoryFilter('');
+        setFilterCategoryVisible(false);
     };
+
+    const applyPriceFilter = () => {
+        setFilterPriceVisible(false)
+    };
+
+    const showPriceFilter = () => {
+        setFilterPriceVisible(!filterPriceVisible);
+        setFilterCategoryVisible(false);
+    }
+
+    const showCategoryFilter = () => {
+        setFilterCategoryVisible(!filterCategoryVisible);
+        setFilterPriceVisible(false);
+    }
 
     return (
         <div className='flex flex-col items-end'>
             <ToastContainer position="top-center" autoClose={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss={false} draggable theme="light" />
 
-            <div className=' w-full lg:w-3/4 flex justify-between mt-12 mb-2'>
-                <div className='text-left'>
+            <div className=' w-full lg:w-3/4 flex justify-between mt-4 md:mt-12 mb-2'>
+                <div className='text-left ps-2 lg:ps-0 w-2/3'>
                     <p className='lg:text-2xl font-bold text-secondary-600 -mb-1'>
                         {filter.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())} Items 
                     </p>
                     <DatePeriod />
+                    {isSmallScreen && (
+                        <div className='flex gap-2 items-center w-full'>
+                            <p className='text-xs'>Filter by:</p>
+                            <div className='relative' >
+                                <button onClick={ showPriceFilter} className='flex items-center justify-center gap-1 shadow-md shadow-gray-400/50 h-full w-16 rounded md:rounded-lg '>
+                                    <p className='text-xs md:text-sm xl:text-base'>Price</p> 
+                                    <ChevronDownIcon className='w-3 md:w-4'/> 
+                                </button>
+                                {filterPriceVisible && (
+                                    <div ref={filterRef} className='text-left text-black absolute z-40 bg-white w-44 flex flex-col justify-center py-1 rounded'>
+                                        {Object.keys(priceFilters).map((filterKey, index) => (
+                                            <div key={index} className='flex items-center gap-2 mt-2 cursor-pointer text-xs px-2'>
+                                                <input type='checkbox' id={filterKey} checked={priceFilters[filterKey]}
+                                                    onChange={() => handlePriceFilterChange(filterKey)}
+                                                    className='text-black w-3 cursor-pointer'
+                                                />
+                                                <label className='text-black cursor-pointer text-xs' htmlFor={filterKey}>{filterKey}</label>
+                                                <p className='text-gray-600'> ({priceFilterCounts[filterKey] ? priceFilterCounts[filterKey] : '0'}) </p>
+                                                </div>
+                                        ))}
+                                        <div className='flex gap-1 mt-1 mx-auto'>
+                                            <p onClick={clearPriceFilters} className='text-xs px-2 py-1 bg-primary-200 rounded-md'>Clear Filter</p>
+                                            <p onClick={applyPriceFilter} className='text-xs px-2 py-1 bg-secondary-200 rounded-md'>Apply Filter</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="relative">
+                                <button onClick={showCategoryFilter} className='flex items-center justify-center gap-1 shadow-md shadow-gray-400/50 h-full w-20 rounded md:rounded-lg '>
+                                    <p className='text-xs md:text-sm xl:text-base'>Category</p> 
+                                    <ChevronDownIcon className='w-3 md:w-4'/> 
+                                </button>
+                                {filterCategoryVisible && (
+                                    <div className='flex flex-col gap-1 absolute z-40 bg-white w-44 items-start px-2 py-1 rounded'>
+                                        {categories.map(item => (
+                                            <div key={item} className='text-left'>
+                                                <p className='cursor-pointer text-xs' onClick={() => showByCateg(item)} > {item.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())} </p>
+                                            </div>
+                                        ))}
+                                        <p onClick={clearCategoryFilter} className='text-xs mt-1 px-2 py-1 bg-primary-200 rounded-md'>Clear Filter</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
                 </div>
-                <div className='flex items-center justify-end w-1/2 gap-4 me-1 relative'>
-                    <p className='text-gray-700'>{filteredData.length} results</p>
-                    <button onClick={() => setFilterVisible(!filterVisible)} className='flex items-center justify-center gap-2 shadow-md shadow-gray-400/50 w-1/3 border-2 border-secondary-500 rounded-lg '>
-                        <p>Sort by Price</p> 
-                        <ChevronDownIcon className='w-4'/> 
+                <div className='flex flex-col md:flex-row items-center md:items-end justify-end md:w-1/2 md:gap-4 me-1 relative'>
+                    <p className='text-gray-700 text-xs md:text-sm xl:text-base'>{filteredData.length} results</p>
+                    <button onClick={() => setSortVisible(!sortVisible)} className='flex items-center justify-center md:gap-2 shadow-md shadow-gray-400/50 px-2 lg:px-0 h-1/3 md:h-3/4 w-full md:w-1/3 border-[1px] lg:border-2 border-secondary-500 rounded md:rounded-lg '>
+                        <p className='text-xs md:text-sm xl:text-base'>Sort by Price</p> 
+                        <ChevronDownIcon className='w-3 md:w-4'/> 
                     </button>
-                    {filterVisible && (
-                        <div ref={filterRef} className='absolute flex flex-col justify-end w-[195px] rounded-lg top-11 shadow-xl bg-white p-2 z-40'>
-                            <button className='w-full hover:bg-gray-200 hover:scale-100' onClick={() => handleSortChange("low-to-high")} >Sort Low to High</button>
-                            <button className='w-full hover:bg-gray-200 hover:scale-100' onClick={() => handleSortChange("high-to-low")} >Sort High to Low</button>
+                    {sortVisible && (
+                        <div ref={filterRef} className='absolute flex flex-col justify-end w-[110px] md:w-[140px] xl:w-[195px] rounded-lg top-11 shadow-xl bg-white lg:p-2 z-40'>
+                            <button className='w-full text-xs sm:text-sm lg:text-base hover:bg-gray-200 hover:scale-100' onClick={() => handleSortChange("low-to-high")} >Low to High</button>
+                            <button className='w-full text-xs sm:text-sm lg:text-base hover:bg-gray-200 hover:scale-100' onClick={() => handleSortChange("high-to-low")} >High to Low</button>
                         </div>
                     )}
                 </div>
@@ -200,7 +270,7 @@ export default function FilteredProducts() {
                                     className='text-black w-4 h-4 cursor-pointer'
                                 />
                                 <label className='text-black cursor-pointer' htmlFor={filterKey}>{filterKey}</label>
-                                <p className='text-gray-600'> ({priceFilterCounts[filterKey]}) </p>
+                                <p className='text-gray-600'> ({priceFilterCounts[filterKey] ? priceFilterCounts[filterKey] : '0'}) </p>
                             </div>
                         ))}
                         <button onClick={clearPriceFilters} className=' w-3/4 py-1 mt-3 bg-primary-200 rounded-md'>Clear Price Filter</button>

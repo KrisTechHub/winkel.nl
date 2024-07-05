@@ -1,5 +1,5 @@
-import { ShoppingBagIcon, QueueListIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/solid";
-import { ArchiveBoxIcon, DocumentTextIcon, ClipboardDocumentListIcon, DocumentChartBarIcon, CircleStackIcon,MagnifyingGlassCircleIcon,UserGroupIcon,MegaphoneIcon,BanknotesIcon, CreditCardIcon, CurrencyEuroIcon, ChartBarIcon, Cog6ToothIcon, TruckIcon, ReceiptPercentIcon, PlusCircleIcon, TableCellsIcon , LightBulbIcon, ClipboardDocumentCheckIcon, ShieldCheckIcon } from "@heroicons/react/24/outline";
+import { ShoppingBagIcon, QueueListIcon, ArrowTrendingUpIcon, ChartBarIcon, CurrencyEuroIcon } from "@heroicons/react/24/solid";
+import { ArchiveBoxIcon, DocumentTextIcon, ClipboardDocumentListIcon, DocumentChartBarIcon, CircleStackIcon,MagnifyingGlassCircleIcon,UserGroupIcon,MegaphoneIcon,BanknotesIcon, CreditCardIcon, Cog6ToothIcon, TruckIcon, ReceiptPercentIcon, PlusCircleIcon, TableCellsIcon , LightBulbIcon, ClipboardDocumentCheckIcon, ShieldCheckIcon } from "@heroicons/react/24/outline";
 
 export const data = [
     {

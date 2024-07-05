@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Input } from '@material-tailwind/react';
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import './form.css';
 
 export default function CustomInput({ type, label, name, register, errors, currencySymbol, value, ...validation }) {
@@ -14,9 +15,9 @@ export default function CustomInput({ type, label, name, register, errors, curre
                         value={value}
                         {...register(name, validation)}
                     />
-                    <label className="ml-2">{label}</label>
-                    {errors[name] && <span className='error-message'>{errors[name].message}</span>}
-                </div>
+                    <label className="ml-2 ">{label}</label>
+                    {errors[name] && <span className='error-message flex gap-1'>{errors[name].message} <ExclamationCircleIcon className='w-3.5'/> </span>}
+                    </div>
             ) : (
                 currencySymbol ? (
                     <div className='symbol relative'>
@@ -32,7 +33,7 @@ export default function CustomInput({ type, label, name, register, errors, curre
                                 className={`w-full block rounded-r-md placeholder-shown:border-deep-orange-100 placeholder-shown:border-t-deep-orange-100 ${currencySymbol ? 'border-l-0' : ''}`}
                             />
                         </div>
-                        {errors[name] && <span className='error-message'>{errors[name].message}</span>}
+                        {errors[name] && <span className='error-message flex gap-1'>{errors[name].message} <ExclamationCircleIcon className='w-3.5'/> </span>}
                     </div>
                 ) : (
                     <div className='relative'>
@@ -43,7 +44,7 @@ export default function CustomInput({ type, label, name, register, errors, curre
                             color='deep-orange'
                             className={`w-full rounded-r-md placeholder-shown:border-deep-orange-100 placeholder-shown:border-t-deep-orange-100 ${currencySymbol ? 'border-l-0' : ''}`}
                         />
-                        {errors[name] && <span className='error-message'>{errors[name].message}</span>}
+                        {errors[name] && <span className='error-message flex gap-1'>{errors[name].message} <ExclamationCircleIcon className='w-3.5'/> </span>}
                     </div>
                 )
             )}

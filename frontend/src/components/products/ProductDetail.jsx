@@ -296,7 +296,7 @@ export default function ProductDetail() {
                                 <Typography className='text-xs lg:text-sm font-bold text-black'> Return Policy</Typography>
                             </div>
                             <div className='ps-7'>
-                                <Typography className='text-xs'>{product.returnPolicy ? product.returnPolicy : ""}</Typography>
+                                <Typography className='text-xs'>{product.returnPolicy ? product.returnPolicy : "No return, no exchange"}</Typography>
                             </div>
                         </div>
 
