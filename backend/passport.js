@@ -32,7 +32,7 @@ passport.use(new LocalStrategy({
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL:  "/auth/google/callback"
+    callbackURL:  "https://winkel-nl-backend.onrender.com/auth/google/callback"
 }, 
 function(accessToken, refreshToken, profile, done) {
     // console.log('profile from passport config',profile);

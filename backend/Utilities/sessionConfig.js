@@ -25,7 +25,7 @@ const sessionConfig = {
     cookie: {
         httpOnly: true, //cookies that are set through the session, are only accessible over HTTP, they're not accessible through JavaScript.
         maxAge: 1000 * 60 * 60 * 24, //24 hours
-        secure: false,
+        secure: true,
     }
 }
 

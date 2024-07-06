@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { deleteProfile } from '../../../services/users';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../actions/authActions';
 import { UserCircleIcon, PhoneIcon, EnvelopeIcon, MapPinIcon, PencilSquareIcon, CreditCardIcon, WalletIcon, BanknotesIcon } from '@heroicons/react/24/solid';
 import colors from '../reviews/colours.js';
-import Tabs from '../seller/Tabs.jsx';
 
 export default function Profile () {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector(state => state.auth.user);
     const products = useSelector(state => state.products.products);
