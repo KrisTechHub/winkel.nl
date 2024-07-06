@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config(); //to use .env fileimport express from 'express';
 import express from 'express'
+import path from 'path';
 import session from 'express-session';
 import cors from 'cors';
 import ExpressError from './Utilities/ExpressError.js';
