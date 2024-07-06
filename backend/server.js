@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // This will catch all routes and serve the index.html file
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
 });
 
 app.use((req, res, next) => {

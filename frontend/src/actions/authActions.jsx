@@ -7,8 +7,6 @@ export const SET_USER = 'SET_USER';
 export const SET_REDIRECT_AFTER_LOGIN = 'SET_REDIRECT_AFTER_LOGIN';
 export const CLEAR_REDIRECT_AFTER_LOGIN = 'CLEAR_REDIRECT_AFTER_LOGIN';
 export const UPDATE_IS_SELLER = 'UPDATE_IS_SELLER';
-const serverUrl = process.env.VITE_SERVER;
-
 
 //ACTIONS
 export const login = (user) => ({
@@ -41,7 +39,7 @@ export const clearRedirectAfterLogin = () => ({
 
 
 export const checkAuthStatus = () => (dispatch) => {
-    axios.get(`${serverUrl}/auth/checkAuth`)
+    axios.get(`${process.env.VITE_SERVER}/auth/checkAuth`)
         .then(response => {
             if (response.data.isAuthenticated) {
                 dispatch(setUser(response.data.user));
