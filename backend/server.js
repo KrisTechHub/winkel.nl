@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config(); //to use .env fileimport express from 'express';
 import express from 'express'
 import path from 'path';
+import { fileURLToPath } from 'url';
 import session from 'express-session';
 import cors from 'cors';
 import ExpressError from './Utilities/ExpressError.js';
@@ -17,6 +18,9 @@ import userRoutes from './routes/users.js';
 import authRoutes from './routes/auth.js';
 import passport from 'passport';
 
+// Get the __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
