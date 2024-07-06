@@ -27,6 +27,13 @@ app.use(session(sessionConfig)) // Session middleware
 app.use(passport.initialize()); // Initialize Passport
 app.use(passport.session()); // Use Passport's session middleware
 
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// This will catch all routes and serve the index.html file
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
 app.use((req, res, next) => {
     if (req.headers['x-forwarded-proto'] !== 'https') {
         return res.redirect(`https://${req.headers.host}${req.url}`);
