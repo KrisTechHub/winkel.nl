@@ -80,7 +80,7 @@ passport.use(new FacebookStrategy({
 passport.use(new TwitterStrategy({
     consumerKey: process.env.TWITTER_API_KEY,
     consumerSecret: process.env.TWITTER_API_SECRET,
-    callbackURL: "/auth/twitter/callback",
+    callbackURL: "https://winkel-nl-backend.onrender.com/auth/twitter/callback",
     includeEmail: true
 }, 
 function(accessToken, refreshToken, profile, done) {
