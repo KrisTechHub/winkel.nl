@@ -43,8 +43,8 @@ app.use('/users', userRoutes); //user router
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 // This will catch all routes and serve the index.html file
-app.get('*', (req, res) => {
-    const filePath = path.join(__dirname, '../frontend/dist', 'index.html');
+app.get('/*', (req, res) => {
+    const filePath = path.join(__dirname, '../frontend/dist/index.html');
     console.log('Serving:', filePath);
     res.sendFile(filePath, err => {
         if (err) {

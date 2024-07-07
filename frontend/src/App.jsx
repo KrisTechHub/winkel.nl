@@ -79,7 +79,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter >
       <ScrollToTop />
       <Navbar />
       <div className="lg:container mx-auto pt-[53px] lg:pt-[115px] overflow-hidden">
