@@ -32,19 +32,13 @@ app.use(session(sessionConfig)) // Session middleware
 app.use(passport.initialize()); // Initialize Passport
 app.use(passport.session()); // Use Passport's session middleware
 
-app.use(express.static(path.join(__dirname, 'dist')));
 
-// This will catch all routes and serve the index.html file
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
-});
-
-app.use((req, res, next) => {
-    if (req.headers['x-forwarded-proto'] !== 'https') {
-        return res.redirect(`https://${req.headers.host}${req.url}`);
-    }
-    next();
-});
+// app.use((req, res, next) => {
+//     if (req.headers['x-forwarded-proto'] !== 'https') {
+//         return res.redirect(`https://${req.headers.host}${req.url}`);
+//     }
+//     next();
+// });
 
 
 app.use('/auth', authRoutes); //authorization router
@@ -53,16 +47,29 @@ app.use('/products/:product_id/reviews', reviewRoutes); //review router
 app.use('/category', categoryRoutes ); //category router
 app.use('/users', userRoutes); //user router
 
+//SERVE STATIC FILES
+// app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// This will catch all routes and serve the index.html file
+// app.get('*', (req, res) => {
+//     const filePath = path.join(__dirname, '../frontend/dist', 'index.html');
+//     console.log('Serving:', filePath);
+//     res.sendFile(filePath, err => {
+//         if (err) {
+//             console.error('Error serving index.html:', err);
+//             res.status(500).send('Internal Server Error');
+//         }
+//     });
+// });
 
 // // HANDLING ERROR
 // app.all('*', (req, res, next) => {
 //     next(new ExpressError('Page not found', 404))
 // }) //app.all - for every single request, this will run. this will only run if no error matches from the other pre-defined errors
 
-// app.use((err, req, res, next) => { //404 route
-//     res.status(404).send(err)
-//     // res.send('Something went wrong!', err)
-// })
+app.use((err, req, res, next) => { //404 route
+    res.status(404).send('Something went wrong!', err)
+})
 
 app.listen(8000, () => {
     console.log('Serving on port 8000');

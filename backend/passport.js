@@ -32,7 +32,7 @@ passport.use(new LocalStrategy({
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL:  "https://winkel-nl-backend.onrender.com/auth/google/callback"
+    callbackURL: `${process.env.CLIENT_URL}/auth/google/callback`,
 }, 
 function(accessToken, refreshToken, profile, done) {
     // console.log('profile from passport config',profile);
@@ -63,7 +63,7 @@ function(accessToken, refreshToken, profile, done) {
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "/auth/facebook/callback"
+    callbackURL: `${process.env.CLIENT_URL}/auth/facebook/callback`,
 }, function (accessToken, refreshToken, profile, done) {
     db.query('SELECT * FROM users WHERE uuid = ?', [profile.id], (err, res) => {
         if (err) return done(err);
@@ -80,7 +80,7 @@ passport.use(new FacebookStrategy({
 passport.use(new TwitterStrategy({
     consumerKey: process.env.TWITTER_API_KEY,
     consumerSecret: process.env.TWITTER_API_SECRET,
-    callbackURL: "https://winkel-nl-backend.onrender.com/auth/twitter/callback",
+    callbackURL: `${process.env.CLIENT_URL}/auth/twitter/callback`,
     includeEmail: true
 }, 
 function(accessToken, refreshToken, profile, done) {
