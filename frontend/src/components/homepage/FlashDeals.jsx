@@ -51,7 +51,6 @@ export default function FlashDeals ({ data }) {
             }
         ]
     };
-    console.log(data);
 
     return (
         <div className='flex flex-col mx-4 py-2 lg:py-8'>

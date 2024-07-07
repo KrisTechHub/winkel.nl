@@ -32,7 +32,7 @@ passport.use(new LocalStrategy({
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${process.env.CLIENT_URL}/auth/google/callback`,
+    callbackURL: process.env.GOOGLE_CALLBACK_URI,
 }, 
 function(accessToken, refreshToken, profile, done) {
     // console.log('profile from passport config',profile);
@@ -80,7 +80,7 @@ passport.use(new FacebookStrategy({
 passport.use(new TwitterStrategy({
     consumerKey: process.env.TWITTER_API_KEY,
     consumerSecret: process.env.TWITTER_API_SECRET,
-    callbackURL: `${process.env.CLIENT_URL}/auth/twitter/callback`,
+    callbackURL: process.env.TWITTER_CALLBACK_URI,
     includeEmail: true
 }, 
 function(accessToken, refreshToken, profile, done) {
