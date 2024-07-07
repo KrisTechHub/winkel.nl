@@ -33,14 +33,6 @@ app.use(passport.initialize()); // Initialize Passport
 app.use(passport.session()); // Use Passport's session middleware
 
 
-// app.use((req, res, next) => {
-//     if (req.headers['x-forwarded-proto'] !== 'https') {
-//         return res.redirect(`https://${req.headers.host}${req.url}`);
-//     }
-//     next();
-// });
-
-
 app.use('/auth', authRoutes); //authorization router
 app.use('/products', productRoutes); //product router
 app.use('/products/:product_id/reviews', reviewRoutes); //review router

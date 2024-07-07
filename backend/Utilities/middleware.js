@@ -19,3 +19,11 @@ export const storeReturnTo = (req, res, next) => { //middleware to use returnTo 
     next();
 }
 //************************
+
+
+export const ensureHttps = (req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+        return res.redirect(`https://${req.headers.host}${req.url}`);
+    }
+    next();
+};

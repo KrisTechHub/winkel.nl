@@ -3,6 +3,7 @@ import passport from 'passport';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../db.js'
+import { ensureHttps } from '../Utilities/middleware.js';
 
 const router = express.Router();
 
@@ -110,7 +111,7 @@ router.get('/checkAuth', (req, res) => {
 router.get("/google", passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // Google OAuth callback route
-router.get("/google/callback", passport.authenticate('google', {
+router.get("/google/callback", ensureHttps, passport.authenticate('google', {
     failureRedirect: "/login/failed"
 }), function (req, res) {
     const user = req.user;
@@ -128,7 +129,7 @@ router.get("/google/callback", passport.authenticate('google', {
 router.get("/facebook", passport.authenticate('facebook', {scope: ['profile', 'email'] }));
 
 // Facebook Auth callback route
-router.get("/facebook/callback", passport.authenticate('facebook', {
+router.get("/facebook/callback", ensureHttps, passport.authenticate('facebook', {
     failureRedirect: '/login/failed',
 }, function (req, res) {
     const user = req.user;
@@ -148,7 +149,7 @@ router.get("/facebook/callback", passport.authenticate('facebook', {
 router.get("/twitter", passport.authenticate('twitter', {scope: ['profile', 'email'] }));
 
 // twitter Auth callback route
-router.get("/twitter/callback", passport.authenticate('twitter', {
+router.get("/twitter/callback", ensureHttps, passport.authenticate('twitter', {
     failureRedirect: '/login/failed',
 }), function (req, res) {
     const user = req.user;
