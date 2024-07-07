@@ -17,12 +17,12 @@ import reviewRoutes from './routes/reviews.js';
 import userRoutes from './routes/users.js';
 import authRoutes from './routes/auth.js';
 import passport from 'passport';
+const app = express();
 
 // Get the __dirname equivalent in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = express();
 
 //MIDDLEWARES
 app.use(cors(corsOptions)); // Apply CORS middleware before anything else
@@ -40,11 +40,11 @@ app.use('/category', categoryRoutes ); //category router
 app.use('/users', userRoutes); //user router
 
 //SERVE STATIC FILES
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
+app.use(express.static(path.join(__dirname, '../dist')));
 
 // This will catch all routes and serve the index.html file
-app.get('/*', (req, res) => {
-    const filePath = path.join(__dirname, '../frontend/dist/index.html');
+app.get('*', (req, res) => {
+    const filePath = path.join(__dirname, '../dist', 'index.html');
     console.log('Serving:', filePath);
     res.sendFile(filePath, err => {
         if (err) {

@@ -13,6 +13,7 @@ export default defineConfig({
       input: './src/index.html', // Ensure this path is correct
     },
   },
+  base: '/', // Ensure the base path is set correctly
   server: {
     open: true,
     port: 5173,
