@@ -40,19 +40,19 @@ app.use('/category', categoryRoutes ); //category router
 app.use('/users', userRoutes); //user router
 
 //SERVE STATIC FILES
-// app.use(express.static(path.join(__dirname, '../frontend/dist')));
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 // This will catch all routes and serve the index.html file
-// app.get('*', (req, res) => {
-//     const filePath = path.join(__dirname, '../frontend/dist', 'index.html');
-//     console.log('Serving:', filePath);
-//     res.sendFile(filePath, err => {
-//         if (err) {
-//             console.error('Error serving index.html:', err);
-//             res.status(500).send('Internal Server Error');
-//         }
-//     });
-// });
+app.get('*', (req, res) => {
+    const filePath = path.join(__dirname, '../frontend/dist', 'index.html');
+    console.log('Serving:', filePath);
+    res.sendFile(filePath, err => {
+        if (err) {
+            console.error('Error serving index.html:', err);
+            res.status(500).send('Internal Server Error');
+        }
+    });
+});
 
 // // HANDLING ERROR
 // app.all('*', (req, res, next) => {
