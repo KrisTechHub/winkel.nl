@@ -1,10 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Typography } from '@material-tailwind/react';
 
 export default function AuthRedirect () {
-    const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
     
     return (
         <div className='container mx-auto py-[15%]'>
@@ -15,7 +13,7 @@ export default function AuthRedirect () {
                     <Link to={'/'} className='py-1 lg:py-2 px-2 lg:px-5 bg-black text-white rounded hover:bg-gray-900 transition-hover duration-300 ease-in-out'>
                         <p className='w-full'>Back to Home</p>
                     </Link>
-                    <Link to={'/user/register'} className='py-1 lg:py-2 px-2 lg:px-5 bg-black text-white rounded hover:bg-gray-900 transition-hover duration-300 ease-in-out's>
+                    <Link to={'/user/register'} className='py-1 lg:py-2 px-2 lg:px-5 bg-black text-white rounded hover:bg-gray-900 transition-hover duration-300 ease-in-out'>
                         <p className='w-full'>Log in / Register</p>
                     </Link>
                 </div>
